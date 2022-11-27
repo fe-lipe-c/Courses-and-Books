@@ -21,3 +21,31 @@ Can be viewed as a generalization of the bandits setting.
 #### Notation
 
 ![bandit_notation](img/bandit_notation.png)
+
+#### Finite-arm i.i.d. Reward Bandit
+#### Designing Algorithms to Minimize Regret
+
+**Definition 1 (Best Arm Benchmark).**  Always playing the optimal arm every round is the best outcome for the learner and results in the best performance for the game. Denote the expected reward of the optimal arm as $\mu^{*}$. We call $T \cdot \mu^{*}$ the best arm benchmark.
+
+**Definition 2 (Random Regret).** Random regret is defined as the difference between the best arm benchmark and our cumulative reward during the game:
+$$
+\begin{equation*}
+	T\mu^{*} - \sum_{t=1}^{T} X_{t} \tag{1}
+\end{equation*}
+$$
+
+**Definition 3 (Pseudo Regret).** Pseudo regret is the difference between the best arm benchmark and the sum of the expected rewards of each arm played:
+$$
+\begin{equation*}
+	R(T) = T\mu^{*} - \sum_{t=1}^{T} \mu_{A_{t}} \geq 0 \tag{2}
+\end{equation*}
+$$
+
+**Definition 4 (Worst Case Expected Regret).** Worst case expected regret is defined as the worst-case expected pseudo regret:
+$$
+\begin{equation*}
+	\sup_{\mu_{1}, \mu_{2}, \dots, \mu_{K}} \mathbb{E}[R(T)] \tag{3}
+\end{equation*}
+$$
+
+#### The Explore-then-Commit Algorithm and its Analysis
