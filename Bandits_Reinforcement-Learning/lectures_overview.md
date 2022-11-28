@@ -49,3 +49,17 @@ $$
 $$
 
 #### The Explore-then-Commit Algorithm and its Analysis
+
+![explore_then_commit](img/algo_exp_commit.png)
+
+**Theorem 5 (Hoeffding's Inequality)** Let $X_{1}, X_{2}, X_{3}, \dots \stackrel{i.i.d.}{\sim} P, \mathbb{E}[X_{i}] = \mu$ and $X_{i} \in [0,1]$ with probability 1. Then
+$$
+\begin{equation*}
+	\mathbb{P} \left(\left|\frac{1}{n}\sum_{i=1}^{n}X_{i}-\mu \right| \geq \epsilon \right) \leq 2 \exp \{-2n\epsilon^{2}\}
+\end{equation*}
+$$
+Hoeffding's inequality belongs to a broad class of inequalities, called concentration inequalities.
+
+**Theorem 6.** With $N = (T / K)^{2/3}(\ln T)^{1/3}$, Algorithm 1 achieves worst-case expected regret bound $\mathbb{E}[R (T)] \leq O (T^{2/3}(K \ln T)^{1/3})$.
+
+It is interesting to see that, with such a naive algorithm, the regret bound is sublinear with respect to $T$.
