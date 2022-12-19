@@ -18,12 +18,17 @@ Can be viewed as a generalization of the bandits setting.
 
 ### Lecture 02: Analysis of finite-arm i.i.d.-reward bandit
 
-#### Notation
+##### Notation
 
 ![bandit_notation](img/bandit_notation.png)
 
-#### Finite-arm i.i.d. Reward Bandit
-#### Designing Algorithms to Minimize Regret
+##### 2.1 Finite-arm i.i.d. Reward Bandit
+
+This is a basic model of the bandit problem with i.i.d. rewards. There are two properties for this problem:
+1. It is memoryless, meaning the reward after round $t$ does not depend on any action or reward before round $t$ once the action at round $t$ is given: $\mathbb{P}_{X_{t}|A_{1},X_{1}, A_{2},X_{2}, \dots, X_{t-1},A_{t}} = \mathbb{P}_{A_{t}}$.
+2. It is casual, meaning that the action of the learner during round $T$ is influenced by the actions and rewards of previous rounds: $\mathbb{P}_{A_{t}|A_{1},X_{1}, A_{2},X_{2}, \dots,A_{t-1}, X_{t-1}} = \pi_{t}(\cdot | A_{1},X_{1}, A_{2},X_{2},\dots,A_{t-1},X_{t-1})$.
+
+##### 2.2 Designing Algorithms to Minimize Regret
 
 **Definition 1 (Best Arm Benchmark).**  Always playing the optimal arm every round is the best outcome for the learner and results in the best performance for the game. Denote the expected reward of the optimal arm as $\mu^{*}$. We call $T \cdot \mu^{*}$ the best arm benchmark.
 
@@ -48,7 +53,7 @@ $$
 \end{equation*}
 $$
 
-#### The Explore-then-Commit Algorithm and its Analysis
+##### 2.3 The Explore-then-Commit Algorithm and its Analysis
 
 ![explore_then_commit](img/algo_exp_commit.png)
 
@@ -65,3 +70,46 @@ Hoeffding's inequality belongs to a broad class of inequalities, called concentr
 It is interesting to see that, with such a naive algorithm, the regret bound is sublinear with respect to $T$.
 
 ### Lecture 03: Explore then commit and successive elimination
+
+##### 3.2 Adaptive Exploration vs Non-Adaptive Exploration
+
+**Adaptive Exploration:** the choice of next arm depends on the reward history. \
+**Non-adaptive Exploration:** pull every arm the same number of times which has been specified without seeing the reward.
+
+**Definition 1.** The true expected reward of bandit arm $a$ is $\mu_{a} = \mu (a) = \mathbb{E}_{\sim \mathbb{P}_{a}}[R_{a,i}]$, for every $i \in [0,T]$.
+
+**Definition 2.** At time $t$, the number of times arm $a$ has been pulled is $n_{t}(a)$.
+
+**Definition (Empirical Average Reward)** The empirical average reward of arm $a$, at time $t$, is:
+$$
+\begin{equation*}
+	\bar{\mu}_{t}(a) = \frac{1}{n_{t}(a)} \sum_{i=1}^{n_{t}(a)} R_{a,i} 
+\end{equation*}
+$$
+
+**Theorem 3.** Under the setting of Adaptive Exploration, assume we pulled arm $a$ $n_{t}(a)$ times:
+$$
+\begin{equation*}
+	\mathbb{P}\left(|\bar{\mu}(a) - \mu (a)| \leq r_{t}(a)\right) \geq 1 - \frac{1}{T^{4}}
+\end{equation*}
+$$
+where $r_{t}(a) = \sqrt{\frac{2 \log (T)}{n_{t}(a)}}$.
+
+We can no longer apply the Hoeffding's inequality here since it assumes that the sample is drawn independently from a distribution with a fixed number of times.
+
+##### 3.3 Successive Elimination
+
+**Definition 4.**  
+Upper Confidence Bound: $\text{UCB}_{t}(a) = \bar{\mu}_{t}(a) + r_{t}(a)$
+
+Lower Confidence Bound: $\text{LCB}_{t}(a) = \bar{\mu}_{t}(a) - r_{t}(a)$
+
+
+![successive_elimination](img/successive_elimination.png)
+
+**Theorem 5.** Under The setting of successive elimination, the pseudo-regret
+$$
+\begin{equation*}
+	R (T) \precsim \sqrt{KT \log (T)}
+\end{equation*}
+$$

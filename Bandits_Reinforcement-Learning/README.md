@@ -12,4 +12,6 @@ The material consists of several lecture notes.
 
 - [X] Lecture 1: Introduction to Bandits and Reinforcement Learning
 - [X] Lecture 2: Analysis of finite-arm i.i.d.-reward bandit
+	- Explore then commit algorithm
 - [ ] Lecture 3: Explore then commit and successive elimination
+	- Succesive elimination algorithm
