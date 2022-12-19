@@ -13,5 +13,8 @@ The material consists of several lecture notes.
 - [X] Lecture 1: Introduction to Bandits and Reinforcement Learning
 - [X] Lecture 2: Analysis of finite-arm i.i.d.-reward bandit
 	- Explore then commit algorithm
-- [ ] Lecture 3: Explore then commit and successive elimination
+- [X] Lecture 3: Explore then commit and successive elimination
 	- Succesive elimination algorithm
+- [ ] Lecture 4: Analysis of Successive Elimination and UCB Algorithm
+- [ ] Lecture 5: Minimax Lower Bound for Finite-Arm Bandit Algorithms
+- [ ] Lecture 6: Minimax Lower Bound and Thompson Sampling
