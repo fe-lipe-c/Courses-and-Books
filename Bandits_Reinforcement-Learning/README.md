@@ -11,5 +11,5 @@ This course will cover the cutting edge of multi-armed bandits and reinforcement
 The material consists of several lecture notes.
 
 - [X] Lecture 1: Introduction to Bandits and Reinforcement Learning
-- [ ] Lecture 2: Analysis of finite-arm i.i.d.-reward bandit
+- [X] Lecture 2: Analysis of finite-arm i.i.d.-reward bandit
 - [ ] Lecture 3: Explore then commit and successive elimination

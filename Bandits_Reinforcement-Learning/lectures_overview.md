@@ -63,3 +63,5 @@ Hoeffding's inequality belongs to a broad class of inequalities, called concentr
 **Theorem 6.** With $N = (T / K)^{2/3}(\ln T)^{1/3}$, Algorithm 1 achieves worst-case expected regret bound $\mathbb{E}[R (T)] \leq O (T^{2/3}(K \ln T)^{1/3})$.
 
 It is interesting to see that, with such a naive algorithm, the regret bound is sublinear with respect to $T$.
+
+### Lecture 03: Explore then commit and successive elimination
