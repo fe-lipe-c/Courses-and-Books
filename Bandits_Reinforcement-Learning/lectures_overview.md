@@ -150,3 +150,7 @@ UCB1 Algorithm: Optimism in the face of Uncertainty.
 ![ucb1_algo](img/ucb1.png)
 
 ##### 4.3 Phased Successive Elimination
+
+Phased successive elimination is a variation of successive elimination, notably producing an upper-bound that contains a log term that is a function of $K$, rather than $T$. The upper bound of pseudo-regret of this algorithm is $\sqrt{KT \log K}$.
+
+![phased_successive_elimination](img/phased_successive_elimination.png)
