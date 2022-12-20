@@ -69,6 +69,8 @@ Hoeffding's inequality belongs to a broad class of inequalities, called concentr
 
 It is interesting to see that, with such a naive algorithm, the regret bound is sublinear with respect to $T$.
 
+**Definition (Clean Event)** The case when every empirical mean $\bar{\mu}(a)$ stays close to the true expectation $\mu (a)$, and provide a lower bound for $\mathbb{P}(\mathcal{E})$ using Hoeffding's inequality. 
+
 ### Lecture 03: Explore then commit and successive elimination
 
 ##### 3.2 Adaptive Exploration vs Non-Adaptive Exploration
@@ -113,3 +115,38 @@ $$
 	R (T) \precsim \sqrt{KT \log (T)}
 \end{equation*}
 $$
+
+
+### Lecture 04: Analysis of Successive Elimination and UCB Algorithm
+
+The last lecture presented the crucial property:
+$$
+\begin{equation}
+	\Delta (a) = \mu^{*} (a) - \mu(a) \precsim \sqrt{\frac{\log (T)}{n_{T}(a)}} \tag{1}
+\end{equation}
+$$
+for any sub-optimal arm $a$.
+
+##### 4.1 Instance-dependent and Instance-independet Bounds
+
+**INSTANCE-DEPENDENT:** for the problem instance-dependent bound, we build off equation 1 and rearrange terms to get an upper-bound for $n_{T}(a)$:
+$$
+\begin{equation}
+	n_{T}(a) \precsim \frac{\log (T)}{(\Delta (a))^{2}} \tag{4}
+\end{equation}
+$$
+
+**INSTANCE-INDEPENDENT:** 
+$$
+\begin{equation}
+	R (T) \precsim \sqrt{KT \log (T)} \tag{5}
+\end{equation}
+$$
+
+##### 4.2 The UCB1 Algorithm
+
+UCB1 Algorithm: Optimism in the face of Uncertainty.
+
+![ucb1_algo](img/ucb1.png)
+
+##### 4.3 Phased Successive Elimination
