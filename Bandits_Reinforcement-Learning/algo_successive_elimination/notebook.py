@@ -1,4 +1,4 @@
-"""Notebook for the explore-then-commit algorithm."""
+"""Notebook for the successive elimination algorithm."""
 
 from utils import SuccessiveElimination
 import altair as alt
