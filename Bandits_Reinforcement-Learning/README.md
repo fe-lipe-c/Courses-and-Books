@@ -15,6 +15,8 @@ The material consists of several lecture notes.
 	- Explore then commit algorithm
 - [X] Lecture 3: Explore then commit and successive elimination
 	- Succesive elimination algorithm
-- [ ] Lecture 4: Analysis of Successive Elimination and UCB Algorithm
+- [X] Lecture 4: Analysis of Successive Elimination and UCB Algorithm
+	- UCB1 algorithm
+	- Phased successive elimination algorithm
 - [ ] Lecture 5: Minimax Lower Bound for Finite-Arm Bandit Algorithms
 - [ ] Lecture 6: Minimax Lower Bound and Thompson Sampling
