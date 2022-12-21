@@ -154,3 +154,18 @@ UCB1 Algorithm: Optimism in the face of Uncertainty.
 Phased successive elimination is a variation of successive elimination, notably producing an upper-bound that contains a log term that is a function of $K$, rather than $T$. The upper bound of pseudo-regret of this algorithm is $\sqrt{KT \log K}$.
 
 ![phased_successive_elimination](img/phased_successive_elimination.png)
+
+### Lecture 5: Minimax Lower Bound for Finite-Arm Bandit Algorithms
+
+**Definition 1 (Kullback-Leibler Divergence)** For two probability measures $\mathbb{P}$ and $\mathbb{Q}$ on the same probability space, the KL divergence is defined as:
+$$
+	D_{KL}(\mathbb{P}||\mathbb{Q}) = 
+	\begin{cases} \mathbb{E}_{\mathbb{P}}\left[\log \frac{d\mathbb{P}}{d\mathbb{Q}}\right], \qquad \text{if } \mathbb{P} << \mathbb{Q}\\
+	\infty, \qquad \qquad \qquad \text{otherwise}
+	\end{cases}
+$$
+where $\frac{d \mathbb{P}}{d \mathbb{Q}}$ is the likelihood ratio and $\mathbb{P}<< \mathbb{Q}$ means that $\mathbb{P}$ is absolutely continuous w.r.t. $\mathbb{Q}$, which is true if for any set $A$ we have $\mathbb{Q}(A) = 0 \implies \mathbb{P}(A) = 0$.
+
+When the probability measures $\mathbb{P}$ and $\mathbb{Q}$ have associated density functions, given by $p (x)$ and $q (x)$ respectively, then $\frac{d \mathbb{P}}{d \mathbb{Q}} (x) = \frac{p (x)}{q (x)}$, and we can write the KL divergence as $\int p (x)\log \frac{p (x)}{q (x)}dx$.
+
+**Lemma 3 (Divergence Decomposition Lemma)** Let
