@@ -168,4 +168,20 @@ where $\frac{d \mathbb{P}}{d \mathbb{Q}}$ is the likelihood ratio and $\mathbb{P
 
 When the probability measures $\mathbb{P}$ and $\mathbb{Q}$ have associated density functions, given by $p (x)$ and $q (x)$ respectively, then $\frac{d \mathbb{P}}{d \mathbb{Q}} (x) = \frac{p (x)}{q (x)}$, and we can write the KL divergence as $\int p (x)\log \frac{p (x)}{q (x)}dx$.
 
-**Lemma 3 (Divergence Decomposition Lemma)** Let
+
+**Lemma 3 (Divergence Decomposition Lemma)** Let $\nu = (p_{1}, p_{2}, \dots, p_{k})$ be one instance of rewards distributions for a bandit scenario, and $\nu^{\prime} = (p_{1}^{\prime}, p_{2}^{\prime}, \dots, p_{k}^{\prime})$ be another. Fix an arbitrary policy $\pi$ consisting of the time-dependent policies $\pi_{t} (a_{t}| a_{1},x_{1}, a_{2}, x_{2},\dots, a_{t-1},x_{t-1})$ for $1 \leq t \leq T$. Let $P_{\nu}$ be the joint measure of $(A_{1}, X_{1}, A_{2}, \dots, A_{T}, X_{T})$ under instance $\nu$ and policy $\pi$, and $P_{\nu^{\prime}}$ be defined similarly for instance $\nu^{\prime}$ and policy $\pi$. Then the KL divergence between $P_{\nu}$ and $P_{\nu^{\prime}}$ can be written as:
+$$
+\begin{equation*}
+	D (P_{\nu}|| P_{\nu^{\prime}}) = \sum_{i=1}^{k}\mathbb{E}_{\nu}[n_{T}(i)]D (p_{i}||p_{i}^{\prime}) \tag{2}
+\end{equation*}
+$$
+where $n_{T}(i)$ is the number of times arm $i$ was pulled by time $T$. Note that $n_{T}(i)$ is a random variable depending on both the randomness of the environment and the policy.
+
+One interpretation of this result is that given a particular KL divergence $D (P_{\nu}|| P_{\nu^{\prime}})$ for an algorithm, if $D (p_{i}||p_{i}^{\prime})$ is small, you expect to have to pull arm $i$ many times to figure out which instance you are in, while if $D (p_{i}||p_{i}^{\prime})$ is large, a good algorithm should be able to make the distinction with only a few pulls. Thus, the metric of $D (P_{\nu}|| P_{\nu^{\prime}})$ is important for understanding how well an algorithm behaves.
+
+**Theorem 4.** For $T \geq K -1$ and $\nu$ from the family of Gaussian bandit instances,
+$$
+\begin{equation*}
+	\inf_{\pi} \sup_{\nu} \mathbb{E}[R (T)] \succsim \sqrt{KT}
+\end{equation*}
+$$
