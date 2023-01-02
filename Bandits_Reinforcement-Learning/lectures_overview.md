@@ -155,7 +155,7 @@ Phased successive elimination is a variation of successive elimination, notably 
 
 ![phased_successive_elimination](img/phased_successive_elimination.png)
 
-### Lecture 5: Minimax Lower Bound for Finite-Arm Bandit Algorithms
+### Lecture 05: Minimax Lower Bound for Finite-Arm Bandit Algorithms
 
 **Definition 1 (Kullback-Leibler Divergence)** For two probability measures $\mathbb{P}$ and $\mathbb{Q}$ on the same probability space, the KL divergence is defined as:
 $$
@@ -185,3 +185,35 @@ $$
 	\inf_{\pi} \sup_{\nu} \mathbb{E}[R (T)] \succsim \sqrt{KT}
 \end{equation*}
 $$
+
+### Lecture 06: Minimax Lower Bound and Thompson Sampling
+
+##### 6.1 Minimax Lower Bound for Finite-Arm Bandits
+
+**Definition 2 (Total Variation Distance)** Let $P$ and $Q$be two probability measures defined on $(\Omega, F)$, with density functions $p$ and $q$ respectively. The total variation distance (TV) between $P$ and $Q$ is defined
+$$
+\begin{equation*}
+	TV (P,Q) = \sup_{A \in F} \left(P (A)- P (Q)\right) = \sup_{A \in F} \int_{x \in A} (p (x)- q (x))dx \tag{2}
+\end{equation*}
+$$
+Clearly, for any $P$ and $Q$, $TV (P,Q) \in [0,1]$.
+
+**Lemma 3 (Pinsker's Inequality)** Let $P$ and $Q$ be two probability measures. Then
+$$
+\begin{equation*}
+	TV (P,Q) \leq \sqrt{ \frac{1}{2} D_{KL}(P || Q)} \tag{3}
+\end{equation*}
+$$
+
+As TV-distance is always bounded by $1$, Pinsker's inequality becomes meaningless for very large $D_{KL}$. The following inequality on the other hand provides a non-trivial upper bound for TV-distance when $D_{KL}$ is large.
+
+**Lemma 4.** Let $P$ and $Q$ be two probability measures. Then 
+$$
+\begin{equation*}
+	1 - TV (P,Q) \geq \frac{1}{2} e^{-D_{KL}(P || Q)} \tag{4}
+\end{equation*}
+$$
+
+##### 6.2 Thompson Sampling
+
+![thompson_sampling](img/algo_TS.png)
