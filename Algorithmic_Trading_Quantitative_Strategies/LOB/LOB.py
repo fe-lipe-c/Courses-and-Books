@@ -5,6 +5,8 @@ It supports the following operations: insert, modify and cancel.
 """
 
 import numpy as np
+from decimal import Decimal, getcontext
+getcontext().prec = 6
 
 class LOB:
     """Implements the LOB."""
@@ -18,3 +20,10 @@ class LOB:
         self.ask_size = 0
     
     def insert(price, quantity):
+
+1.1 + 2.2
+one = Decimal(1.1)
+two = Decimal(2.2)
+one
+two
+one + two 
