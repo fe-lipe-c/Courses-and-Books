@@ -2,11 +2,10 @@
 
 import pandas as pd
 import altair as alt
-from utils import query, auction
+from utils import auction
 import clickhouse_driver
 
 #
-
 df_open, df_close = auction("PETR4")
 df_open["type"] = "open"
 df_close["type"] = "close"
@@ -21,7 +20,6 @@ df_auction
 df_total
 df_open
 df_close
-
 # df_auction = pd.DataFrame()
 # df_auction["trade_day"] = df_open["trade_time"].dt.date
 # df_auction["open_vol"] = df_open["volume"]
