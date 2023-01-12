@@ -6,10 +6,14 @@ from utils import auction
 import clickhouse_driver
 
 #
-df_open, df_close = auction("PETR4")
-df_open["type"] = "open"
-df_close["type"] = "close"
+df_open, df_close, df_interval = auction("TRAD3")
 
+# add colum with change relative to previous value
+
+df_open["vol_pct_change"] = df_open["volume"].pct_change()
+df_open["price_pct_change"] = df_open["price"].pct_change()
+
+df_open[df_open["price_pct_change"] <= 0]
 # concat the two dataframes
 
 df_total = pd.concat([df_open, df_close])
@@ -131,3 +135,25 @@ WHERE rn = 1
 
 print(sql.replace("trade_time", "trade_time DESC"))
 print(sql)
+
+
+asset = "TRAD3"
+sql = f"""
+SELECT
+    ticker,
+    trade_time,
+    toFloat64(price) AS price,
+    quantity
+FROM tradeintraday
+WHERE
+    ticker = '{asset}'
+AND EXTRACT(hour from trade_time) < (SELECT DATE_ADD(MIN(trade_time), INTERVAL 1 HOUR) FROM tradeintraday WHERE DATE(trade_time) = DATE(trade_time))
+"""
+
+client = clickhouse_driver.Client(
+    host="localhost", database="aqdb", settings={"use_numpy": True}
+)
+
+df = client.query_dataframe(sql)
+
+df
