@@ -6,9 +6,10 @@ from utils import auction
 import clickhouse_driver
 
 #
-df_open, df_close, df_interval = auction("TRAD3")
+df_open, df_close = auction("TRAD3")
 
 # add colum with change relative to previous value
+df_close
 
 df_open["vol_pct_change"] = df_open["volume"].pct_change()
 df_open["price_pct_change"] = df_open["price"].pct_change()
@@ -147,13 +148,85 @@ SELECT
 FROM tradeintraday
 WHERE
     ticker = '{asset}'
-AND EXTRACT(hour from trade_time) < (SELECT DATE_ADD(MIN(trade_time), INTERVAL 1 HOUR) FROM tradeintraday WHERE DATE(trade_time) = DATE(trade_time))
 """
-
+# AND EXTRACT(hour from trade_time) < (SELECT DATE_ADD(MIN(trade_time), INTERVAL 1 HOUR) FROM tradeintraday WHERE DATE(trade_time) = DATE(trade_time))
+# """
+#
 client = clickhouse_driver.Client(
     host="localhost", database="aqdb", settings={"use_numpy": True}
 )
 
 df = client.query_dataframe(sql)
+df.sort_values(by="trade_time", inplace=True)
+df[df["trade_time"] <= "2021-07-29"]
 
+
+# SELECT
+#     ticker,
+#     trade_time,
+#     toFloat64(price) AS price,
+#     quantity
+# FROM tradeintraday
+# WHERE ticker = 'TRAD3'
+# AND EXTRACT(HOUR FROM trade_time) <= (SELECT MIN(EXTRACT(HOUR FROM trade_time)) FROM tradeintraday WHERE ticker = 'TRAD3')
+sql_teste = """
+SELECT
+    ticker,
+    trade_time,
+    toFloat64(price) AS price,
+    quantity
+FROM tradeintraday
+WHERE ticker = 'TRAD3'
+AND EXTRACT(HOUR FROM trade_time) <= (SELECT MIN(EXTRACT(HOUR FROM trade_time)) FROM tradeintraday WHERE ticker = 'TRAD3') 
+"""
+# AND EXTRACT(HOUR FROM trade_time) <= (SELECT MIN(EXTRACT(HOUR FROM trade_time)) FROM tradeintraday WHERE DATE_TRUNC('day', trade_time) = DATE_TRUNC('day', trade_time))
+# """
+
+client = clickhouse_driver.Client(
+    host="localhost", database="aqdb", settings={"use_numpy": True}
+)
+
+df = client.query_dataframe(sql_teste)
+
+df.sort_values(by="trade_time", inplace=True)
+df
+df[df["trade_time"] <= "2021-07-29"]
+
+sql_new = """
+SELECT
+    ticker,
+    trade_time,
+    toFloat64(price) AS price,
+    quantity
+FROM tradeintraday
+WHERE ticker = 'TRAD3'
+AND EXTRACT(HOUR FROM trade_time) <= 10
+"""
+
+df_new = client.query_dataframe(sql_new)
+
+df_new.sort_values(by="trade_time", inplace=True)
+df_new.reset_index(drop=True, inplace=True)
+df_new[(df_new["trade_time"] <= "2023-01-05") & (df_new["trade_time"] >= "2023-01-04")]
+df_new
+
+
+df = df_new.copy()
+df = df.set_index("trade_time")
+df["date"] = df.index.date
+first_prices = df.groupby(by="date")["price"].first()
+last_prices = df.groupby(by="date")["price"].last()
+df_prices = pd.DataFrame()
+df_prices["date"] = last_prices.index
+df_prices["first_price"] = first_prices.values
+df_prices["last_price"] = last_prices.values
+df_prices["return"] = df_prices["last_price"] / df_prices["first_price"] - 1
+df_prices
+df_open = df_open[df_open["trade_time"].dt.hour <= 11]
+df_open.reset_index(drop=True, inplace=True)
+df_open["return"] = df_prices["return"]
+df_open
+
+df["price_pct_change"] = (last_prices - first_prices) / first_prices
+df.dropna(inplace=True)
 df

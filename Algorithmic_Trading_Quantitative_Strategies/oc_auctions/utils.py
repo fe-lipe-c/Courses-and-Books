@@ -40,29 +40,7 @@ def auction(asset):
     # sort dataframe by date
     df_close.sort_values(by="trade_time", inplace=True)
     df_close["volume"] = df_close["quantity"] * df_close["price"]
-    df_close["vol_pct_change"] = df_open["volume"].pct_change()
-    df_close["price_pct_change"] = df_open["price"].pct_change()
+    df_close["vol_pct_change"] = df_close["volume"].pct_change()
+    df_close["price_pct_change"] = df_close["price"].pct_change()
 
-    sql_interval = f"""
-    SELECT
-        ticker,
-        trade_time,
-        toFloat64(price) AS price,
-        quantity
-    FROM tradeintraday
-    WHERE
-        ticker = '{asset}'
-    AND DATE_TRUNC(trade_time) <= (SELECT DATE_ADD(MIN(trade_time), INTERVAL 1 HOUR) FROM tradeintraday WHERE DATE(trade_time) = DATE(trade_time))
-    """
-
-    # [Error] ServerException: Code: 46.
-    # DB::Exception: Unknown function TIME. Maybe you meant: ['tid','like']: While processing SELECT ticker, trade_time, toFloat64(price) AS price, quantity FROM tradeintraday WHERE (ticker = 'PETR4') AND (TIME(trade_time) <= (_CAST('1581328800.023', 'Nullable(DateTime64(3, \'UTC\'))') AS _subquery2)). Stack trace:
-    #
-
-    df_interval = client.query_dataframe(sql_interval)
-    # SELECT *
-    # FROM stocks
-    # WHERE TIME(datetime) <= (SELECT DATE_ADD(MIN(TIME(datetime)), INTERVAL 1 HOUR) FROM stocks WHERE DATE(datetime) = DATE(datetime))
-    # GROUP BY DATE(datetime);
-
-    return df_open, df_close, df_interval
+    return df_open, df_close
