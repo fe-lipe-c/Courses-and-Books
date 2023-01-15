@@ -1,6 +1,7 @@
 """Notebook to explore the open and close B3 auctions."""
 
 import pandas as pd
+import numpy as np
 import altair as alt
 from utils import auction
 import clickhouse_driver
@@ -11,6 +12,8 @@ df_open, df_close = auction("TRAD3")
 # add colum with change relative to previous value
 df_close
 df_open
+
+# Plot delta time change versus open auction volume
 
 # concat the two dataframes
 
@@ -81,40 +84,3 @@ df.head(20)
 #
 
 # ---------------
-
-client = clickhouse_driver.Client(
-    host="localhost", database="aqdb", settings={"use_numpy": True}
-)
-
-sql_new = """
-SELECT
-    ticker,
-    trade_time,
-    toFloat64(price) AS price,
-    quantity
-FROM tradeintraday
-WHERE ticker = 'TRAD3'
-AND EXTRACT(HOUR FROM trade_time) <= 10
-"""
-
-df_new = client.query_dataframe(sql_new)
-
-df_new.sort_values(by="trade_time", inplace=True)
-df_new.reset_index(drop=True, inplace=True)
-df_new[(df_new["trade_time"] <= "2022-01-05") & (df_new["trade_time"] >= "2022-01-04")]
-df_new
-
-df_new["date"] = df_new["trade_time"].dt.date
-first_prices = df_new.groupby(by="date")["price"].first()
-last_prices = df_new.groupby(by="date")["price"].last()
-
-first_prices = df.groupby(by="date")["price"].first()
-last_prices = df.groupby(by="date")["price"].last()
-df_prices = pd.DataFrame()
-df_prices["date"] = last_prices.index
-df_prices["first_price"] = first_prices.values
-df_prices["last_price"] = last_prices.values
-df_prices["return"] = df_prices["last_price"] / df_prices["first_price"] - 1
-df_open = df_open[df_open["trade_time"].dt.hour <= 11]
-df_open.reset_index(drop=True, inplace=True)
-df_open["return"] = df_prices["return"]
