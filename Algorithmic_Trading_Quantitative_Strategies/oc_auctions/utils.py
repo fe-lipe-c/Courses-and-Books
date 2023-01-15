@@ -64,7 +64,7 @@ def auction(asset, delta=10):
     df_new.reset_index(drop=True, inplace=True)
 
     df_new["date"] = df_new["trade_time"].dt.date
-    first_prices = df_new.groupby(by="date")["price"].first()
+    first_prices = df_new.groupby(by="date")["price"].nth(1)
     last_prices = df_new.groupby(by="date")["price"].last()
 
     df_prices = pd.DataFrame()

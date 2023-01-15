@@ -1,19 +1,61 @@
 """Notebook to explore the open and close B3 auctions."""
 
 import pandas as pd
-import numpy as np
 import altair as alt
 from utils import auction
 import clickhouse_driver
 
 #
-df_open, df_close = auction("TRAD3")
+df_open, df_close = auction("PETRk4")
 
 # add colum with change relative to previous value
 df_close
-df_open
+df_open[1:]
+
+# Plot price change between open auctions and delta time price variation
+
+chart_open = (
+    alt.Chart(df_open[1:])
+    .mark_point(size=60, color="red")
+    .encode(
+        alt.X("price_pct_change"),
+        alt.Y("return_delta"),
+    )
+    .properties(width=800, height=800)
+)
+
+chart_open.save("chart_open.html")
 
 # Plot delta time change versus open auction volume
+
+df_open_posive = df_open[df_open["price_pct_change"] >= 0]
+
+chart_open_positive = (
+    alt.Chart(df_open_posive)
+    .mark_circle(size=60)
+    .encode(
+        alt.X("price_pct_change", title="Price Change (%)"),
+        alt.Y("vol_pct_change", title="Volume Change (%)"),
+    )
+    .properties(width=800, height=800)
+)
+
+chart_open_positive.save("chart_open_positive.html")
+
+
+df_open_negative = df_open[df_open["price_pct_change"] < 0]
+
+chart_open_negative = (
+    alt.Chart(df_open_negative)
+    .mark_circle(size=60)
+    .encode(
+        alt.X("price_pct_change", title="Price Change (%)"),
+        alt.Y("vol_pct_change", title="Volume Change (%)"),
+    )
+    .properties(width=800, height=800)
+)
+
+chart_open_negative.save("chart_open_negative.html")
 
 # concat the two dataframes
 
@@ -84,3 +126,42 @@ df.head(20)
 #
 
 # ---------------
+
+client = clickhouse_driver.Client(
+    host="localhost", database="aqdb", settings={"use_numpy": True}
+)
+
+sql_new = """
+SELECT
+    ticker,
+    trade_time,
+    toFloat64(price) AS price,
+    quantity
+FROM tradeintraday
+WHERE ticker = 'TRAD3'
+AND EXTRACT(HOUR FROM trade_time) <= 10
+"""
+
+df_new = client.query_dataframe(sql_new)
+
+df_new.sort_values(by="trade_time", inplace=True)
+df_new.reset_index(drop=True, inplace=True)
+df_new[df_new["trade_time"] > "2023-01-03"]
+
+df_new["date"] = df_new["trade_time"].dt.date
+first_prices = df_new.groupby(by="date")["price"].nth(1)
+last_prices = df_new.groupby(by="date")["price"].last()
+
+
+df_prices = pd.DataFrame()
+df_prices["date"] = last_prices.index
+df_prices["first_price"] = first_prices.values
+df_prices["last_price"] = last_prices.values
+df_prices["return"] = df_prices["last_price"] / df_prices["first_price"] - 1
+df_open_geq = df_open[df_open["trade_time"].dt.hour > 11].reset_index(drop=True)
+df_open_leq = df_open[df_open["trade_time"].dt.hour <= 11].reset_index(drop=True)
+df_open_geq["return_delta"] = np.nan
+df_open_leq["return_delta"] = df_prices["return"]
+df_open_new = pd.concat([df_open_geq, df_open_leq])
+df_open_new.sort_values(by="trade_time", inplace=True)
+df_open_new.reset_index(drop=True, inplace=True)
