@@ -10,39 +10,13 @@ df_open, df_close = auction("TRAD3")
 
 # add colum with change relative to previous value
 df_close
+df_open
 
-df_open["vol_pct_change"] = df_open["volume"].pct_change()
-df_open["price_pct_change"] = df_open["price"].pct_change()
-
-df_open[df_open["price_pct_change"] <= 0]
 # concat the two dataframes
 
 df_total = pd.concat([df_open, df_close])
 df_total.sort_values(by="trade_time", inplace=True)
 df_total
-
-df_auction
-df_total
-df_open
-df_close
-# df_auction = pd.DataFrame()
-# df_auction["trade_day"] = df_open["trade_time"].dt.date
-# df_auction["open_vol"] = df_open["volume"]
-# df_auction["close_vol"] = df_close["volume"]
-#
-# df_auction
-
-chart_auction = (
-    alt.Chart(df_auction)
-    .mark_circle()
-    .encode(
-        alt.X("open_vol:Q"),
-        alt.Y("close_vol:Q"),
-    )
-)
-
-chart_auction.save("chart_auction.html")
-
 
 # sql = """
 # SELECT
@@ -55,6 +29,8 @@ chart_auction.save("chart_auction.html")
 #     ticker = 'PETR4'
 # LIMIT 37000
 # """
+
+# SPREAD ------
 
 client = clickhouse_driver.Client(
     host="localhost", database="aqdb", settings={"use_numpy": True}
@@ -104,93 +80,11 @@ df.head(20)
 # 4      VALE3 2022-03-03 10:03:40.623  100.22       500
 #
 
-sql = """
-SELECT
-    ticker,
-    trade_time,
-    toFloat64(price) AS price,
-    quantity
-FROM tradeintraday
-WHERE
-    ticker = 'VALE3'
-AND trade_time BETWEEN '2022-03-03' AND '2022-03-04'
-"""
-
-df_alt = client.query_dataframe(sql)
-df_alt
-
-sql = f"""
-SELECT * FROM (
-    SELECT
-        ticker,
-        trade_time,
-        toFloat64(price) AS price,
-        quantity,
-        ROW_NUMBER() OVER (PARTITION BY DATE(trade_time) ORDER BY trade_time) AS rn
-    FROM tradeintraday
-    WHERE
-        ticker = 'PETR4'
-)
-WHERE rn = 1
-"""
-
-print(sql.replace("trade_time", "trade_time DESC"))
-print(sql)
-
-
-asset = "TRAD3"
-sql = f"""
-SELECT
-    ticker,
-    trade_time,
-    toFloat64(price) AS price,
-    quantity
-FROM tradeintraday
-WHERE
-    ticker = '{asset}'
-"""
-# AND EXTRACT(hour from trade_time) < (SELECT DATE_ADD(MIN(trade_time), INTERVAL 1 HOUR) FROM tradeintraday WHERE DATE(trade_time) = DATE(trade_time))
-# """
-#
-client = clickhouse_driver.Client(
-    host="localhost", database="aqdb", settings={"use_numpy": True}
-)
-
-df = client.query_dataframe(sql)
-df.sort_values(by="trade_time", inplace=True)
-df[df["trade_time"] <= "2021-07-29"]
-
-
-# SELECT
-#     ticker,
-#     trade_time,
-#     toFloat64(price) AS price,
-#     quantity
-# FROM tradeintraday
-# WHERE ticker = 'TRAD3'
-# AND EXTRACT(HOUR FROM trade_time) <= (SELECT MIN(EXTRACT(HOUR FROM trade_time)) FROM tradeintraday WHERE ticker = 'TRAD3')
-sql_teste = """
-SELECT
-    ticker,
-    trade_time,
-    toFloat64(price) AS price,
-    quantity
-FROM tradeintraday
-WHERE ticker = 'TRAD3'
-AND EXTRACT(HOUR FROM trade_time) <= (SELECT MIN(EXTRACT(HOUR FROM trade_time)) FROM tradeintraday WHERE ticker = 'TRAD3') 
-"""
-# AND EXTRACT(HOUR FROM trade_time) <= (SELECT MIN(EXTRACT(HOUR FROM trade_time)) FROM tradeintraday WHERE DATE_TRUNC('day', trade_time) = DATE_TRUNC('day', trade_time))
-# """
+# ---------------
 
 client = clickhouse_driver.Client(
     host="localhost", database="aqdb", settings={"use_numpy": True}
 )
-
-df = client.query_dataframe(sql_teste)
-
-df.sort_values(by="trade_time", inplace=True)
-df
-df[df["trade_time"] <= "2021-07-29"]
 
 sql_new = """
 SELECT
@@ -207,13 +101,13 @@ df_new = client.query_dataframe(sql_new)
 
 df_new.sort_values(by="trade_time", inplace=True)
 df_new.reset_index(drop=True, inplace=True)
-df_new[(df_new["trade_time"] <= "2023-01-05") & (df_new["trade_time"] >= "2023-01-04")]
+df_new[(df_new["trade_time"] <= "2022-01-05") & (df_new["trade_time"] >= "2022-01-04")]
 df_new
 
+df_new["date"] = df_new["trade_time"].dt.date
+first_prices = df_new.groupby(by="date")["price"].first()
+last_prices = df_new.groupby(by="date")["price"].last()
 
-df = df_new.copy()
-df = df.set_index("trade_time")
-df["date"] = df.index.date
 first_prices = df.groupby(by="date")["price"].first()
 last_prices = df.groupby(by="date")["price"].last()
 df_prices = pd.DataFrame()
@@ -221,12 +115,6 @@ df_prices["date"] = last_prices.index
 df_prices["first_price"] = first_prices.values
 df_prices["last_price"] = last_prices.values
 df_prices["return"] = df_prices["last_price"] / df_prices["first_price"] - 1
-df_prices
 df_open = df_open[df_open["trade_time"].dt.hour <= 11]
 df_open.reset_index(drop=True, inplace=True)
 df_open["return"] = df_prices["return"]
-df_open
-
-df["price_pct_change"] = (last_prices - first_prices) / first_prices
-df.dropna(inplace=True)
-df
