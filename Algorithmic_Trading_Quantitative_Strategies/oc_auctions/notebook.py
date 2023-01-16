@@ -6,7 +6,7 @@ from utils import auction
 import clickhouse_driver
 
 #
-df_open, df_close = auction("PETRk4")
+df_open, df_close = auction("PRIO3")
 
 # add colum with change relative to previous value
 df_close
@@ -34,8 +34,8 @@ chart_open_positive = (
     alt.Chart(df_open_posive)
     .mark_circle(size=60)
     .encode(
-        alt.X("price_pct_change", title="Price Change (%)"),
-        alt.Y("vol_pct_change", title="Volume Change (%)"),
+        alt.X("vol_pct_change", title="Volume Change (%)"),
+        alt.Y("return_delta", title="Delta Change (%)"),
     )
     .properties(width=800, height=800)
 )
@@ -126,42 +126,3 @@ df.head(20)
 #
 
 # ---------------
-
-client = clickhouse_driver.Client(
-    host="localhost", database="aqdb", settings={"use_numpy": True}
-)
-
-sql_new = """
-SELECT
-    ticker,
-    trade_time,
-    toFloat64(price) AS price,
-    quantity
-FROM tradeintraday
-WHERE ticker = 'TRAD3'
-AND EXTRACT(HOUR FROM trade_time) <= 10
-"""
-
-df_new = client.query_dataframe(sql_new)
-
-df_new.sort_values(by="trade_time", inplace=True)
-df_new.reset_index(drop=True, inplace=True)
-df_new[df_new["trade_time"] > "2023-01-03"]
-
-df_new["date"] = df_new["trade_time"].dt.date
-first_prices = df_new.groupby(by="date")["price"].nth(1)
-last_prices = df_new.groupby(by="date")["price"].last()
-
-
-df_prices = pd.DataFrame()
-df_prices["date"] = last_prices.index
-df_prices["first_price"] = first_prices.values
-df_prices["last_price"] = last_prices.values
-df_prices["return"] = df_prices["last_price"] / df_prices["first_price"] - 1
-df_open_geq = df_open[df_open["trade_time"].dt.hour > 11].reset_index(drop=True)
-df_open_leq = df_open[df_open["trade_time"].dt.hour <= 11].reset_index(drop=True)
-df_open_geq["return_delta"] = np.nan
-df_open_leq["return_delta"] = df_prices["return"]
-df_open_new = pd.concat([df_open_geq, df_open_leq])
-df_open_new.sort_values(by="trade_time", inplace=True)
-df_open_new.reset_index(drop=True, inplace=True)
