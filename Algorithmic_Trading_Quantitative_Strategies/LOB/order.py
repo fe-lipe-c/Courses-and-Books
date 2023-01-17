@@ -10,7 +10,14 @@ class Order:
     """Class representing an order in the limit order book."""
 
     def __init__(
-        self, trader_id, order_id, side, order_type, price, quantity, life_duration
+        self,
+        trader_id,
+        order_side,
+        order_type,
+        price,
+        quantity,
+        order_lifetime,
+        order_id=None,
     ):
         """Initialize an order."""
         self.valid_order_types = {
@@ -28,16 +35,23 @@ class Order:
             raise ValueError(
                 f"Invalid order type {order_type}. Must be one of {self.valid_order_types.keys()}"
             )
-        if side not in self.valid_sides:
-            raise ValueError(f"Invalid side {side}. Must be one of {self.valid_sides}")
+        if order_side not in self.valid_sides:
+            raise ValueError(
+                f"Invalid side {order_side}. Must be one of {self.valid_sides}"
+            )
 
         self.trader_id = trader_id
         self.order_id = order_id
-        self.side = side
+        self.side = order_side
         self.order_type = order_type
-        self.price = price
+
+        if order_type == "market":
+            self.price = None
+        else:
+            self.price = price
+
         self.quantity = quantity
-        self.life_duration = life_duration
+        self.life_duration = order_lifetime
         self.timestamp = datetime.datetime.now()
 
     def __lt__(self, other):
