@@ -42,7 +42,7 @@ class Order:
 
         self.trader_id = trader_id
         self.order_id = order_id
-        self.side = order_side
+        self.order_side = order_side
         self.order_type = order_type
 
         if order_type == "market":
@@ -59,3 +59,23 @@ class Order:
         if self.price != other.price:
             return self.price < other.price
         return self.order_id < other.order_id
+
+    def __str__(self):
+        """Return a string representation of the order."""
+        return "trader_id:{} || {}({}) {}@{}/{} || {}".format(
+            self.trader_id,
+            self.order_side,
+            self.order_type,
+            self.quantity,
+            self.price,
+            self.order_id,
+            self.timestamp,
+        )
+
+        # trader_id,
+        # order_side,
+        # order_type,
+        # price,
+        # quantity,
+        # order_lifetime,
+        # order_id=None,

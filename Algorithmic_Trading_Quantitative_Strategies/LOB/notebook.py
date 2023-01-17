@@ -24,6 +24,7 @@ order_2 = Order(
 )
 
 order_0 < order_2
+print(order_0)
 
 lob = LimitOrderBook()
 
