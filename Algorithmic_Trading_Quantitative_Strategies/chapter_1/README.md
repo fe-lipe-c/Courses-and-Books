@@ -6,9 +6,15 @@ To do a proper analysis of the intraday volume distribution, first we need to ex
 
 A caveat that needs to be pointed out is the possibility of an auction occurring over the normal trading time, when, for example, the analyzed asset exceeds a certain variation. In this situation, since the data is not annotated with this information, it will be part of the final analysis. Nevertheless, this kind of data in the normal intraday trading contributes to a greater differentiation between the distributions.
 
+The data must be binned in time intervals. I aggregated the data in 30 minute intervals. One choice that needs to be made is when this aggregation starts: whether at the beginning of the asset's trading day (which changes from day to day, according to the dynamics of the opening auction) or at the natural separation of the day's hours.
+
+The following chart shows the intraday volume distribution for the first 2 days of the week for the asset PRIO3.
+
+![volume density - PRIO3](img/vol_density_prio.png)
+
 ### To Do
 
-- [ ] Intraday volume distribution
+- [X] Intraday volume distribution
 - [ ] KL divergence for volume distribution
 - [ ] Figure 1.4: Futures Rolling
 
