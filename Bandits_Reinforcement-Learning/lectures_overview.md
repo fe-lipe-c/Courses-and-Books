@@ -216,4 +216,16 @@ $$
 
 ##### 6.2 Thompson Sampling
 
+Here we'll use Bayesian statistics to derive a simple algorithm for finite-arm bandits. Bayesian statistics is a method of statistical inference in which prior beliefs about the probability of a hypothesis are combined with new data to provide updated estimates. This is done by expressing the hypothesis as a probability distribution, and updating this distribution as new data is collected. This approach uses Bayes' theorem:
+$$
+\begin{align*}
+	P(H|D) &= \frac{P(D|H)P(H)}{P(D)} \tag{5}\\
+\end{align*}
+$$
+where $P (H|D)$ is the posterior probability of the hypothesis $H$ given the data $D$, $P (D|H)$ is the likelihood of the data given the hypothesis, $P (H)$ is the prior probability of the hypothesis and $P (D)$ is the probability of the data.
+
+For example, suppose that we have rewards that comes from a Bernoulli distribution (the data), i.e. $x_{i} \sim \text{Bern}(r)$, for some $r \in [0,1]$ ($x_{i} \in \left\{0,1 \right\}$). We don't know the value r (the hypothesis), and we need a prior to find a posterior 
+
+A conjugate prior is a prior distribution that belongs to the same family as the likelihood function. For example, if data $x_{i}$ is coming from a Bernoulli distribution, i.e. $x_{i} \sim \text{Bern}(r)$, for some $r \in [0,1]$ ($x_{i} \in \left\{0,1 \right\}$),
+
 ![thompson_sampling](img/algo_TS.png)
