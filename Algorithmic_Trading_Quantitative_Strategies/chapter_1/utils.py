@@ -2,6 +2,7 @@
 
 import altair as alt
 import clickhouse_driver
+from scipy.stats import wasserstein_distance
 
 # - [ ] Intraday volume distribution ------------------------------------------
 
@@ -58,6 +59,8 @@ def volume_distribution(asset, start_data, end_date, interval="1h", factor=10000
 
     if factor == 1000000:
         string_factor = "volume R$ millions"
+    elif factor == 100000:
+        string_factor = "volume R$ hundreds of thousands"
     elif factor == 1000:
         string_factor = "volume R$ thousands"
     elif factor == 1:
@@ -84,4 +87,34 @@ def volume_distribution(asset, start_data, end_date, interval="1h", factor=10000
 
     html_string = f"volume_density_{asset}.html"
     chart_data.save(html_string)
-    return new_df
+    return new_df, df_data
+
+
+def vol_distances(df, list_days):
+
+    df_07 = df[
+        (df["trade_time"] > f"{list_days[0]}") & (df["trade_time"] <= f"{list_days[1]}")
+    ]
+    df_08 = df[
+        (df["trade_time"] > f"{list_days[1]}") & (df["trade_time"] <= f"{list_days[2]}")
+    ]
+    df_09 = df[
+        (df["trade_time"] > f"{list_days[2]}") & (df["trade_time"] <= f"{list_days[3]}")
+    ]
+    df_10 = df[
+        (df["trade_time"] > f"{list_days[3]}") & (df["trade_time"] <= f"{list_days[4]}")
+    ]
+    df_11 = df[
+        (df["trade_time"] > f"{list_days[4]}") & (df["trade_time"] <= f"{list_days[5]}")
+    ]
+
+    lista = [df_07, df_08, df_09, df_10, df_11]
+    dict_lista = {0: [], 1: [], 2: [], 3: [], 4: []}
+
+    for i, tabela in enumerate(lista):
+        for j, outra in enumerate(lista):
+            dict_lista[i].append(
+                (j, wasserstein_distance(tabela["volume"], outra["volume"]))
+            )
+
+    return dict_lista
