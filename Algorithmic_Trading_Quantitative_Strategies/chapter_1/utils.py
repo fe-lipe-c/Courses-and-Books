@@ -109,12 +109,18 @@ def vol_distances(df, list_days):
     ]
 
     lista = [df_07, df_08, df_09, df_10, df_11]
-    dict_lista = {0: [], 1: [], 2: [], 3: [], 4: []}
+    dict_lista = {
+        list_days[0]: [],
+        list_days[1]: [],
+        list_days[2]: [],
+        list_days[3]: [],
+        list_days[4]: [],
+    }
 
     for i, tabela in enumerate(lista):
         for j, outra in enumerate(lista):
-            dict_lista[i].append(
-                (j, wasserstein_distance(tabela["volume"], outra["volume"]))
+            dict_lista[list_days[i]].append(
+                (wasserstein_distance(tabela["volume"], outra["volume"]))
             )
 
     return dict_lista

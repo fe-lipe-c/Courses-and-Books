@@ -12,10 +12,28 @@ The following chart shows the intraday volume distribution for the first 2 days 
 
 ![volume density - PRIO3](img/vol_density_prio.png)
 
+### Wasserstein distance for volume distribution
+
+According to Wikipedia, "in mathematics, the Wasserstein distance or Kantorovich–Rubinstein metric is a distance function defined between probability distributions on a given metric space $M$. It is named after Leonid Vaseršteĭn. Intuitively, if each distribution is viewed as a unit amount of earth (soil) piled on M {\displaystyle M} M, the metric is the minimum "cost" of turning one pile into the other, which is assumed to be the amount of earth that needs to be moved times the mean distance it has to be moved. This problem was first formalised by Gaspard Monge in 1781. Because of this analogy, the metric is known in computer science as the earth mover's distance." [(wiki)](https://en.wikipedia.org/wiki/Wasserstein_metric)
+Using this metric, we can compare the volume distribution of the asset in different days. The following chart shows the volume distributions for 5 days of the week. The table
+
+![5week vol dens - PRIO3](img/volDensity_distances.png)
+
+The following table shows the Wasserstein distance between the volume distribution of the asset PRIO3 for the 5 days of the week.
+
+|             | 2022-08-22  | 2022-08-23  | 2022-08-24  | 2022-08-25  | 2022-08-26  |
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+| **2022-08-22**  | 0| 12289 | 18161| 13855| 17368 
+|**2022-08-23**  | 12289 | 0 | 7929 | 5358 | 8057 
+|**2022-08-24**  | 18161 | 7929 | 0 | 7560 | 4395 
+|**2022-08-25**  | 13855 | 5358 | 7560 | 0 | 6986 
+|**2022-08-26**  | 17368 | 8057 | 4395 | 6986 | 0    
+
+
 ### To Do
 
 - [X] Intraday volume distribution
-- [ ] KL divergence for volume distribution
+- [X] Wasserstein distance for volume distribution
 - [ ] Figure 1.4: Futures Rolling
 
 ![figure1_4](img/futures_roll.png =600x)

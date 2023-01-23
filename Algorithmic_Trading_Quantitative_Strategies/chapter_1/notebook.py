@@ -1,17 +1,14 @@
 """Notebook to explore  B3 data."""
 
 from utils import volume_distribution, vol_distances
-from sklearn.neighbors import KernelDensity
 import pandas as pd
-from scipy.stats import iqr, wasserstein_distance
-
 
 # - [ ] Intraday volume distribution ------------------------------------------
 
-asset = "PETR4"
-month = "12"
-day_start = "05"
-day_end = "10"
+asset = "PRIO3"
+month = "08"
+day_start = "22"
+day_end = "27"
 start_data = f"2022-{month}-{day_start}"
 end_date = f"2022-{month}-{day_end}"
 
