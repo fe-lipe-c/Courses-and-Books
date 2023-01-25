@@ -12,9 +12,9 @@ client = clickhouse_driver.Client(
 
 
 def volume_distribution(asset, start_data, end_date, interval="1h", factor=1000000):
-
-    # Select intraday data for a given asset, exlude the first row and last row for
-    # each day (open and close auction)
+    """Volume distribution."""
+    # Select intraday data for a given asset, exclude the first row and last
+    # row for each day (open and close auction).
 
     sql = f"""
     SELECT * FROM (
