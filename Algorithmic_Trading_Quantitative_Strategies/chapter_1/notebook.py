@@ -1,6 +1,11 @@
 """Notebook to explore  B3 data."""
 
-from utils import volume_distribution, vol_distances
+from utils import (
+    volume_distribution,
+    vol_distances,
+    trade_distribution,
+    trade_distances,
+)
 import clickhouse_driver
 import pandas as pd
 
@@ -29,8 +34,40 @@ df_vol, df_data = volume_distribution(
 
 dist_list = vol_distances(df_data, list_days)
 
-df_data
-# - [ ] Distribution of spread size
+# - [ ] Disbribution of trade size
+
+asset = "PRIO3"
+month = "05"
+day_start = "23"
+day_end = "28"
+start_data = f"2022-{month}-{day_start}"
+end_date = f"2022-{month}-{day_end}"
+
+list_days = (
+    pd.date_range(start=start_data, end=end_date, freq="D")
+    .strftime("%Y-%m-%d")
+    .tolist()
+)
+
+df_trades = trade_distribution(
+    asset,
+    start_data,
+    end_date,
+    max_domain=1000,
+    opacity=0.7,
+)
+
+dist_list = trade_distances(df_trades, list_days)
+
+df_distance_ = pd.DataFrame()
+
+for i in dist_list.keys():
+    df_distance_[i] = dist_list[i]
+
+df_distance_.index = df_distance_.columns
+
+
+# - [ ] Intraday spread distribution
 
 # SPREAD ------
 
@@ -55,6 +92,7 @@ AND spread_time BETWEEN '{start_data}' AND '{end_date}'
 
 df_spread = client.query_dataframe(sql)
 df_spread.sort_values(by=["spread_time"], inplace=True)
+df_spread.reset_index(drop=True, inplace=True)
 df_spread.head(150)
 df_spread
 
@@ -123,8 +161,9 @@ df_spread_trades = df_spread[
 ]
 df_spread_trades
 
-df_spread["spread_size"] = df_spread["ask"] - df_spread["bid"]
+df_spread_trades["spread_size"] = df_spread_trades["ask"] - df_spread_trades["bid"]
 
+df_spread_trades[df_spread_trades["spread_size"] < 0].head(100)
 
 # Trading hours
 #   	                                    Início 	Fim
