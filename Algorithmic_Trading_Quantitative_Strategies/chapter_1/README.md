@@ -54,17 +54,23 @@ The trade size is the quantity per trade and is a good indicator of the liquidit
 | 2022-05-26  | 1196        | 840         | 632         | 0           | 417         |
 | 2022-05-27  | 847         | 561         | 419         | 417         | 0           |
 
+
+###  Futures Rolling
+
+The futures rolling is a process that occurs in the futures market, where the futures contracts are rolled to the next contract. The rolling is done in a specific date, which is called the expiration date.
+
+![moving average - IND](img/ind_ma_vol.png)
+
 ### To Do
 
 - [X] Intraday volume distribution
 - [ ] Distribution of spread size
 - [X] Disbribution of trade size
 - [X] Wasserstein distance for volume distribution
-- [ ] Figure 1.4: Futures Rolling
-
-![figure1_4](img/futures_roll.png =600x)
-
 - [ ] X-day average auction volume
 - [ ] Beta with respec to an index or sector (plain beta or asymmetric up-days/down-days beta)
 - [ ] correlation matrix
 - [ ] VWAP
+- [X] Figure 1.4: Futures Rolling
+
+![figure1_4](img/futures_roll.png =600x)
