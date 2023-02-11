@@ -126,3 +126,43 @@ df.head(20)
 #
 
 # ---------------
+# - [ ] X-day average auction volume
+asset = "PRIO3"
+df_open, df_close = auction("PRIO3")
+
+df_auction = pd.DataFrame()
+df_auction["Date"] = df_open["trade_time"].dt.date
+df_auction["Date"] = pd.to_datetime(df_auction["Date"])
+df_auction["open_mov_averg"] = df_open["volume"].rolling(5).mean()
+df_auction["close_mov_averg"] = df_close["volume"].rolling(5).mean()
+df_auction["open_price_norm"] = df_open["price"] / df_open["price"][0]
+df_auction["diff"] = df_auction["open_mov_averg"] - df_auction["close_mov_averg"]
+df_auction.reset_index(inplace=True, drop=True)
+
+df_auction[df_auction["diff"] > 0]
+df_auction.index
+df_auction.info()
+
+base = (
+    alt.Chart(df_auction[df_auction["Date"] < "2020-04-01"])
+    .encode(alt.X("Date:T"))
+    .properties(width=800, height=400)
+)
+
+area = base.mark_area(opacity=1, color="#57A44C").encode(
+    alt.Y(
+        "open_mov_averg:Q",
+        axis=alt.Axis(title="Mov. Avg. Auction", titleColor="#57A44C"),
+    ),
+    alt.Y2("close_mov_averg:Q"),
+    color=alt.condition(
+        alt.datum.diff > 0,
+        alt.value("steelblue"),
+        alt.value("orange"),
+    ),
+)
+
+area.save("area.html")
+
+
+df_auction[df_auction["Date"] < "2020-04-01"]

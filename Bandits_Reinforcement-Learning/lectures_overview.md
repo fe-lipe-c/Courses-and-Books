@@ -153,6 +153,7 @@ UCB1 Algorithm: Optimism in the face of Uncertainty.
 
 Phased successive elimination is a variation of successive elimination, notably producing an upper-bound that contains a log term that is a function of $K$, rather than $T$. The upper bound of pseudo-regret of this algorithm is $\sqrt{KT \log K}$.
 
+
 ![phased_successive_elimination](img/phased_successive_elimination.png)
 
 ### Lecture 05: Minimax Lower Bound for Finite-Arm Bandit Algorithms
@@ -246,3 +247,6 @@ $$
 where $B_{a} = \left\{\nu \in \mathcal{E} : a = \text{argmax}_{b} \mu_{b}(\nu) \right\} \in \mathcal{B}(\mathcal{E})$, with ties in the argmax being resolved in an arbitrary, but systematic fashion.
 
 ![thompson_sampling](img/algo_TS.png)
+
+adf
+

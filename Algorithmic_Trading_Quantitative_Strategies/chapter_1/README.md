@@ -61,6 +61,10 @@ The futures rolling is a process that occurs in the futures market, where the fu
 
 ![moving average - IND](img/ind_ma_vol.png)
 
+
+### X-day average auction volume
+
+
 ### To Do
 
 - [X] Intraday volume distribution

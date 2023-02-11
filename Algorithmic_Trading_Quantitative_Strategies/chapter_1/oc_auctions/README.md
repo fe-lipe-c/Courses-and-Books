@@ -9,4 +9,3 @@ In the Brazilian market, B3 has well defined [rules](https://www.b3.com.br/pt_br
 - [X] Prices path after opening auction
 - [ ] Bid and ask through auction
 - [X] For each negative or positive change between auctions, make a scatter plot of var_vol and var_price (first hour of the day)
-- [ ] Average time of the auctions
