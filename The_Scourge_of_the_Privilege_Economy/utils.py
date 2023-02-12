@@ -78,23 +78,24 @@ def chart_gdp_absolute(
                     domain=["Absolute Stagnation", "Absolute Growth"],
                     range=[color_1, color_2],
                 ),
+                legend=None,
             ),
         )
     )
     chart_total = chart_rect + chart_base
     chart_total = (
-        chart_total.resolve_scale(color="independent")
-        .properties(
-            title=f"GDP per capita (current US$) - {country_list[0]}",
+        chart_total.resolve_scale(color="independent").properties(
+            # title=f"GDP per capita (current US$) - {country_list[0]}",
+            title=f"{country_list[0]}",
             width=800,
             height=400,
         )
-        .configure_legend(labelFontSize=20, titleFontSize=20, labelLimit=300)
-        .configure_title(fontSize=20)
-        .configure_axis(
-            # labelFontSize=8,
-            titleFontSize=20,
-        )
+        # .configure_legend(labelFontSize=20, titleFontSize=20, labelLimit=300)
+        # .configure_title(fontSize=20)
+        # .configure_axis(
+        #     # labelFontSize=8,
+        #     titleFontSize=20,
+        # )
     )
     chart_total.save(f"charts/gdp_usd_absolute_{country}.html")
-    return df_gdp_list
+    return df_gdp_list, chart_total

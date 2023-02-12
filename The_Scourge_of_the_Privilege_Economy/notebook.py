@@ -7,25 +7,73 @@ from utils import chart_gdp_absolute
 # GDP per capita (current US$)
 
 # Absolute Stagnation (USD)
-df_data = chart_gdp_absolute(
+
+south_america = [
+    "Argentina",
+    "Bolivia",
     "Brazil",
-    type="usd",
-    opacity=1,
-    line_color="black",
-    color_1="#DAA977",
-    color_2="white",
+    "Chile",
+    "Colombia",
+    "Ecuador",
+    "Paraguay",
+    "Peru",
+    "Uruguay",
+    "Venezuela, RB",
+]
+
+chart_list = []
+for i in south_america:
+    df_data, chart_country = chart_gdp_absolute(
+        i,
+        type="usd",
+        opacity=1,
+        line_color="black",
+        color_1="#DAA977",
+        color_2="white",
+    )
+    chart_list.append(chart_country.properties(width=200, height=200))
+
+chart_new = (
+    alt.ConcatChart(concat=chart_list, columns=3)
+    .resolve_axis(x="shared", y="independent")
+    .properties(
+        title="GDP per capita (current US$)",
+        # resolve=alt.Resolve(
+        #     scale=alt.LegendResolveMap(color=alt.ResolveMode("shared"))
+        # ),
+    )
 )
 
+chart_new.save("charts/test.html")
 
-df_gdp_usd = pd.read_csv("data/wb_data1.csv")
+df_gdp = pd.read_csv(f"data/gdp_usd.csv")
+df_gdp.drop(["Unnamed: 66"], axis=1, inplace=True)
+df_gdp = df_gdp.melt(
+    id_vars=["Country Name", "Country Code", "Indicator Name", "Indicator Code"],
+    var_name="Year",
+    value_name="Value",
+)
+
+df_gdp = df_gdp.drop(["Indicator Code", "Country Code"], axis=1)
+df_gdp
+
+df_gdp_list = df_gdp[df_gdp["Country Name"].isin(south_america)].reset_index(drop=True)
+df_gdp_list[df_gdp_list["Country Name"] == "Brazil"]
+
+df_gdp_list["Growth"] = [
+    "Absolute Stagnation" if x <= 0 else "Absolute Growth"
+    for x in df_gdp_list["Value"].pct_change()
+]
+
+# Data Exploration
+
+df_gdp_usd = pd.read_csv("data/gdp_usd.csv")
 df_gdp_usd.drop(["Unnamed: 66"], axis=1, inplace=True)
 df_gdp_usd = df_gdp_usd.melt(
     id_vars=["Country Name", "Country Code", "Indicator Name", "Indicator Code"],
     var_name="Year",
     value_name="Value",
 )
-
-
 df_gdp_usd = df_gdp_usd.drop(["Indicator Code", "Country Code"], axis=1)
 
 regions_list = ["Low & middle income", "World"]
@@ -50,17 +98,21 @@ chart_base.save("charts/line_chart.html")
 
 # GDP per capita (current US$) - Metadata
 
-df_data_2 = pd.read_csv("data/wb_data2.csv")
-df_data_2["SpecialNotes"].iloc[9]
+df_meta = pd.read_csv("data/gdp_usd_meta1.csv")
+df_meta[df_meta["Region"] == "Latin America & Caribbean"]["Country Code"].unique()
+
+
+df_meta["SpecialNotes"].iloc[9]
 
 # World Bank's remark about Argentina's exchange rate:
 # 'The World Bank systematically assesses the appropriateness of official exchange rates as conversion factors. In this country, multiple or dual exchange rate activity exists and must be accounted for appropriately in underlying statistics. An alternative estimate (“alternative conversion factor” - PA.NUS.ATLS) is thus calculated as a weighted average of the different exchange rates in use in the country. Doing so better reflects economic reality and leads to more accurate cross-country comparisons and country classifications by income level. For this country, this applies to the period 1971-2018. Alternative conversion factors are used in the Atlas methodology and elsewhere in World Development Indicators as single-year conversion factors.'
 
 # GDP per capita (current US$) - Metadata
 
-df_data_3 = pd.read_csv("data/wb_data3.csv")
+df_meta_2 = pd.read_csv("data/gdp_usd_meta2.csv")
+df_meta_2.drop(["Unnamed: 4"], axis=1, inplace=True)
 
-df_data_3.columns
+df_meta_2.columns
 
 # Index(['INDICATOR_CODE', 'INDICATOR_NAME', 'SOURCE_NOTE',
 #        'SOURCE_ORGANIZATION', 'Unnamed: 4'],
