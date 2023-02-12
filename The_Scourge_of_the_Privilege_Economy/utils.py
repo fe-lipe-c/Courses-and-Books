@@ -4,7 +4,9 @@ import pandas as pd
 import altair as alt
 
 
-def chart_gdp_absolute(country, type="usd"):
+def chart_gdp_absolute(
+    country, type="usd", opacity=1, line_color="white", color_1="red", color_2="#2D9EB3"
+):
     """Return a chart of GDP per capita."""
     df_gdp = pd.read_csv(f"data/gdp_{type}.csv")
     df_gdp.drop(["Unnamed: 66"], axis=1, inplace=True)
@@ -58,7 +60,7 @@ def chart_gdp_absolute(country, type="usd"):
 
     chart_base = (
         alt.Chart(df_gdp_list)
-        .mark_line(color="black", strokeWidth=5)
+        .mark_line(color=line_color, strokeWidth=5)
         .encode(
             alt.X("Year:T", title="Year"),
             alt.Y("Value:Q"),
@@ -66,7 +68,7 @@ def chart_gdp_absolute(country, type="usd"):
     )
     chart_rect = (
         alt.Chart(df_event)
-        .mark_rect(opacity=0.6)
+        .mark_rect(opacity=opacity)
         .encode(
             alt.X("start:T"),
             alt.X2("end:T"),
@@ -74,7 +76,7 @@ def chart_gdp_absolute(country, type="usd"):
                 "condition:N",
                 scale=alt.Scale(
                     domain=["Absolute Stagnation", "Absolute Growth"],
-                    range=["red", "lightblue"],
+                    range=[color_1, color_2],
                 ),
             ),
         )
@@ -84,13 +86,13 @@ def chart_gdp_absolute(country, type="usd"):
         chart_total.resolve_scale(color="independent")
         .properties(
             title=f"GDP per capita (current US$) - {country_list[0]}",
-            width=1600,
-            height=800,
+            width=800,
+            height=400,
         )
-        .configure_legend(labelFontSize=20, titleFontSize=20, labelLimit=200)
+        .configure_legend(labelFontSize=20, titleFontSize=20, labelLimit=300)
         .configure_title(fontSize=20)
         .configure_axis(
-            labelFontSize=15,
+            # labelFontSize=8,
             titleFontSize=20,
         )
     )

@@ -7,8 +7,14 @@ from utils import chart_gdp_absolute
 # GDP per capita (current US$)
 
 # Absolute Stagnation (USD)
-df_data = chart_gdp_absolute("Peru")
-df_data.tail(7)
+df_data = chart_gdp_absolute(
+    "Brazil",
+    type="usd",
+    opacity=1,
+    line_color="black",
+    color_1="#DAA977",
+    color_2="white",
+)
 
 
 df_gdp_usd = pd.read_csv("data/wb_data1.csv")
@@ -18,6 +24,7 @@ df_gdp_usd = df_gdp_usd.melt(
     var_name="Year",
     value_name="Value",
 )
+
 
 df_gdp_usd = df_gdp_usd.drop(["Indicator Code", "Country Code"], axis=1)
 

@@ -9,3 +9,8 @@ The World Bank has cross-country data on per capita income that can range from 1
 In the case of Brazil, when compared to the rest of the world, the path of the per capita income in US dollars can be seen in the graph bellow.
 
 ![Brazil per capita income in US dollars](img/gdp_brazil_usd.png)
+
+From this data we can highlight the periods of absolute growth and stagnation.
+
+![Brazil absolute stagnation](img/gdpusd_absolute_Brazil.png)
+
