@@ -14,3 +14,6 @@ From this data we can highlight the periods of absolute growth and stagnation.
 
 ![Brazil absolute stagnation](img/gdpusd_absolute_Brazil.png)
 
+We can show the same for other countries in South America.
+
+![South America absolute stagnation](img/gdp_usd_SA.png)

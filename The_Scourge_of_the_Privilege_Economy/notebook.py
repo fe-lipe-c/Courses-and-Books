@@ -31,11 +31,11 @@ for i in south_america:
         color_1="#DAA977",
         color_2="white",
     )
-    chart_list.append(chart_country.properties(width=200, height=200))
+    chart_list.append(chart_country.properties(width=150, height=150))
 
 chart_new = (
-    alt.ConcatChart(concat=chart_list, columns=3)
-    .resolve_axis(x="shared", y="independent")
+    alt.ConcatChart(concat=chart_list, columns=4)
+    .resolve_axis(x="independent", y="shared")
     .properties(
         title="GDP per capita (current US$)",
         # resolve=alt.Resolve(

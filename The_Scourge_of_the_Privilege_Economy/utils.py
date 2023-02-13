@@ -60,7 +60,7 @@ def chart_gdp_absolute(
 
     chart_base = (
         alt.Chart(df_gdp_list)
-        .mark_line(color=line_color, strokeWidth=5)
+        .mark_line(color=line_color, strokeWidth=2)
         .encode(
             alt.X("Year:T", title="Year"),
             alt.Y("Value:Q"),
