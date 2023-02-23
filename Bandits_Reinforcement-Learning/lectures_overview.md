@@ -225,18 +225,18 @@ $$
 $$
 where $P (H|D)$ is the posterior probability of the hypothesis $H$ given the data $D$, $P (D|H)$ is the likelihood of the data given the hypothesis, $P (H)$ is the prior probability of the hypothesis and $P (D)$ is the probability of the data.
 
-For example, suppose that we have rewards that comes from a Bernoulli distribution (the data), i.e. $x_{i} \sim \text{Bern}(r)$, for some $r \in [0,1]$ ($x_{i} \in \left\{0,1 \right\}$), where we don't know the value r (the hypothesis). At $t =0$, we have a prior distribution over the rewards ($f(r)$) and as new data comes in, we update the prior using Bayes's rule, yielding the posterior distribution $f(r|x)$. 
+For example, suppose that a reward for some action (the data) comes from a Bernoulli distribution, i.e. $x_{i} \sim \text{Bern}(r_{i})$, for some $r_{i} \in [0,1]$ ($x_{i} \in \left\{0,1 \right\}$), where we don't know the value $r_{i}$ (the hypothesis). At $t =0$, we have a prior distribution over the rewards ($f(r)$) and as new data comes in, we update the prior using Bayes's rule, yielding the posterior distribution $f(r|x)$. 
 
 One approach that we can use to choose a prior is to use conjugacy: a conjugate prior is a prior distribution that belongs to the same family as the likelihood function. When the likelihood function and the prior distribution are in the same conjugated family, the posterior distribution follows the same parametric form of the prior distribution. 
 
-Using the example above, if data $x_{i} \sim \text{Bern}(r)$ and we use a prior $r \sim B(a,b)$, where $a$ and $b$ are known, we have
+Using the example above, if data $x_{i} \sim \text{Bern}(r_{i})$ and we use a prior $r_{i} \sim \text{Beta}(a,b)$, where $a$ and $b$ are known, we have
 $$
 \begin{equation*}
 	f (p | x =k)
 \end{equation*}
 $$
 
-Let $k > 1$ and $(\mathcal{E}, \mathcal{B}(\mathcal{E}), Q, P)$ be a $k$-armed Bayesian bandit environment. The learner chooses actions $(A_{t})^{n}_{t=1}$ and receives rewards $(X_{t})_{t=1}^{n}$, and the posterior after $t$ observations is a probability kernel $Q (\cdot | \cdot)$ from $([k]\times \mathbb{R})^{t}$ to $(\mathcal{E}, \mathcal{B}(\mathcal{E}))$. Denote the mean of the $i$th arm in bandit $\nu \in \mathcal{E}$ by $\mu_{i}(\nu) = \int_{\mathbb{R}} x dP_{\nu i}(x)$. In round $t$, Thompson sampling samples a bandit environment $\nu_{t}$ from the posterior of $Q$ given $A_{1}, X_{1}, \dots, A_{t-1}, X_{t-1}$ and then chooses the arm with the largest mean. (Lattimore&Szepesvari)
+Let $k > 1$ and $(\mathcal{E}, \mathcal{B}(\mathcal{E}), Q, P)$ be a $k$-armed Bayesian bandit environment. The learner chooses actions $(A_{t})^{n}_{t=1}$ and receives rewards $(X_{t})_{t=1}^{n}$, and the posterior, after $t$ observations, is a probability kernel $Q (\cdot | \cdot)$ from $([k]\times \mathbb{R})^{t}$ to $(\mathcal{E}, \mathcal{B}(\mathcal{E}))$. Denote the mean of the $i$th arm in bandit $\nu \in \mathcal{E}$ by $\mu_{i}(\nu) = \int_{\mathbb{R}} x dP_{\nu i}(x)$. In round $t$, Thompson sampling samples a bandit environment $\nu_{t}$ from the posterior of $Q$ given $A_{1}, X_{1}, \dots, A_{t-1}, X_{t-1}$ and then chooses the arm with the largest mean. (Lattimore&Szepesvari)
 
 A more precise definition is that Thompson sampling is the policy $\pi = (\pi_{t})_{t=1}^{\infty}$ with
 $$
