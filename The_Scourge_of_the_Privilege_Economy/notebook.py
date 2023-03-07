@@ -20,6 +20,14 @@ south_america = [
     "Uruguay",
     "Venezuela, RB",
 ]
+df_world, chart_world = chart_gdp_absolute(
+    "World",
+    type="usd",
+    opacity=1,
+    line_color="black",
+    color_1="#DAA977",
+    color_2="white",
+)
 
 chart_list = []
 for i in south_america:
@@ -46,7 +54,7 @@ chart_new = (
 
 chart_new.save("charts/test.html")
 
-df_gdp = pd.read_csv(f"data/gdp_usd.csv")
+df_gdp = pd.read_csv("data/gdp_usd.csv")
 df_gdp.drop(["Unnamed: 66"], axis=1, inplace=True)
 df_gdp = df_gdp.melt(
     id_vars=["Country Name", "Country Code", "Indicator Name", "Indicator Code"],
@@ -56,6 +64,7 @@ df_gdp = df_gdp.melt(
 
 df_gdp = df_gdp.drop(["Indicator Code", "Country Code"], axis=1)
 df_gdp
+df_gdp_world = df_gdp[df_gdp["Country Name"] == "World"]
 
 df_gdp_list = df_gdp[df_gdp["Country Name"].isin(south_america)].reset_index(drop=True)
 df_gdp_list[df_gdp_list["Country Name"] == "Brazil"]
