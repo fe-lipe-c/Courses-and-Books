@@ -18,3 +18,11 @@ $$
     r _{t,T} = r _{t}(\tau) = \frac{1}{\tau} \ln \frac{V _{T}}{V _{t}} \tag{1.2}
 \end{equation}
 $$
+Note that both definitions of the interest rate dependent directly of the relative value change ($V _{T}/V _{t}$) and inversely of the investment period ($\tau$). These two properties provide an interesting intuition: a large valuation in a short period of time implies significant returns.
+
+In Brazil, the convention most adopted by the financial market considers the year to have 252 working days. That is,
+$$
+\begin{equation*}
+	\tau = \frac{\small\text{number of working days between $t$ and $T$}}{252}
+\end{equation*}
+$$
