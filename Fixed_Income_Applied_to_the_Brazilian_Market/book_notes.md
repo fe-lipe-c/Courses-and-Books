@@ -2,7 +2,7 @@
 
 ## Chapter 1: Introduction
 
-### Returns and Interest Rates
+### 1.2 Returns and Interest Rates
 
 Returns show the relative change in the price of an asset or the value of a portfolio over a period of time. They are usually expressed as a percentage and are useful for comparing investments. When dealing with fixed income instruments and loans, returns are called interest rates. There are two ways of expressing interest rates: discrete (also called simple or arithmetic) and continuous (also called logarithmic or geometric).
 
