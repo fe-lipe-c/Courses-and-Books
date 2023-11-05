@@ -14,4 +14,8 @@ A book by José Valentim, published in portuguese (Renda Fixa Aplicada ao Mercad
 - [ ] Chapter 7: A not-so-short Introduction to Asset Pricing Theory
 - [ ] Chapter 8: Dynamic Term Structure Models
 
+### Data
+
+The data used is available at the National Treasury of Brazil [website](http://www.tesourotransparente.gov.br/ckan/dataset/ds013).
+
 ### To Do
