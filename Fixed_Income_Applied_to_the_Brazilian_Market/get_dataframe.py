@@ -33,19 +33,15 @@ def get_df_mean_volume():
     df_auction_date["year"] = df_auction_date["auction_date"].dt.year
     df_auction_date.drop(columns=["auction_date"], inplace=True)
     df_volume = df_auction_date.groupby("year").agg(
-        {"total_amount_accepted": ["mean", "min", "max"]}
+        {"total_amount_accepted": ["sum", "count", "mean", "std"]}
     )
     df_volume = df_volume["total_amount_accepted"]
     df_volume.reset_index(inplace=True)
-    for col_label in ["mean", "min", "max"]:
+    for col_label in ["mean", "std"]:
         df_volume[f"{col_label}"] = df_volume[f"{col_label}"].astype(int)
         df_volume[f"{col_label}"] = df_volume[f"{col_label}"] / 1000000000
         df_volume[f"{col_label}"] = df_volume[f"{col_label}"].round(2)
     df_volume["year"] = pd.to_datetime(df_volume["year"], format="%Y")
-    # df_volume["total_amount_accepted"] = df_volume["total_amount_accepted"].astype(int)
-    # df_volume["total_amount_accepted"] = df_volume["total_amount_accepted"] / 1000000000
-    # df_volume["total_amount_accepted"] = df_volume["total_amount_accepted"].round(2)
-    # df_volume["year"] = pd.to_datetime(df_volume["year"], format="%Y")
     return df_volume
 
 
