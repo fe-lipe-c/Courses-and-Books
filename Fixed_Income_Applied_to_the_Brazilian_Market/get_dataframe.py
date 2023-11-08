@@ -23,8 +23,8 @@ def get_df_nr_auctions():
 def get_df_mean_volume():
     # Group by auction date
     cfg.df["total_amount_accepted"] = cfg.df["total_amount_accepted"].astype(int)
-    df_auction_date = pd.DataFrame()
-    df_auction_date = cfg.df.groupby("auction_date").sum()
+    df_auction_date = cfg.df.query('auction_type == "Venda"').copy()
+    df_auction_date = df_auction_date.groupby("auction_date").sum()
     df_auction_date.reset_index(inplace=True)
     df_auction_date = df_auction_date[["auction_date", "total_amount_accepted"]]
 
