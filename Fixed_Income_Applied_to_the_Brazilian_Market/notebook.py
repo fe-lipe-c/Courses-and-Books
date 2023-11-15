@@ -11,12 +11,13 @@ import config as cfg
 # df_extra.query('auction_date >= "2018-05-01" & auction_date <= "2018-07-01"')[
 #     "auction_date"
 # ].unique()
+df_auction_date
 
 df = cfg.df.copy()
 df["total_amount_accepted"] = df["total_amount_accepted"].astype(int)
 df["total_amount_accepted"] = df["total_amount_accepted"] / 1000000000
 df["total_amount_accepted"] = df["total_amount_accepted"].round(2)
-df_auction_date = df.query('auction_type == "Venda"')
+df_auction_date = df.query('auction_type == "Extra Compra"')
 df_extrav = df.query("auction_type == 'Extra Venda'")
 df_extrac = df.query("auction_type == 'Extra Compra'")
 df_auction_date.drop(
@@ -85,6 +86,7 @@ chart_total = (
 chart_total.save("charts/rect.html")
 
 
+df_auction_date
 df_auction_date = df_auction_date.groupby("auction_date").sum()
 df_auction_date.reset_index(inplace=True)
 df_auction_date
@@ -94,17 +96,20 @@ df_auction_date["year"] = df_auction_date["auction_date"].dt.year
 
 df_auction_date["total_amount_accepted"]
 df_auction_date.query("total_amount_accepted == 0")
+df
 
 
 chart_volume = pf.plot_volume(dfp._volume)
 chart_points = (
     alt.Chart(df_auction_date)
-    .mark_circle(size=10)
+    .mark_square(size=20, strokeWidth=10)
     .encode(
         alt.X("auction_date:T"),
         alt.Y(
             "total_amount_accepted:Q",
-            scale=alt.Scale(domain=[0, cfg.df["total_amount_accepted"].max() + 1]),
+            scale=alt.Scale(
+                domain=[0, df_auction_date["total_amount_accepted"].max() + 1]
+            ),
             axis=alt.Axis(
                 title="Volume",
                 titleColor="white",
@@ -112,7 +117,7 @@ chart_points = (
             ),
         ),
         color=alt.condition(
-            alt.datum.year % 2 == 0, alt.value("yellow"), alt.value("#6fa8dc")
+            alt.datum.year % 2 == 0, alt.value("#ffe700"), alt.value("#00c1ff")
         ),
     )
 )
@@ -121,15 +126,15 @@ chart_total = (
     .properties(
         width=1000,
         height=800,
-        title="Brazil National Treasury's Auctions: Volume per day | Mean volume per auction per year (R$ bi)",
-        background="#202025",
+        title="Brazil National Treasury's Auctions: Volume per day | Mean volume per auction per year (R$ bi) - Extraordinary Buy Auctions",
+        background="#1d0c0c",
     )
     .configure_axis(grid=False)
     .configure_title(color="white")
 )
 
-chart_total.save("charts/points.html")
-chart_points.save("charts/points.html")
+chart_total.save("points.html")
+chart_points.save("points.html")
 
 # .configure_axis(grid=False)
 # .configure_title(color="white")
