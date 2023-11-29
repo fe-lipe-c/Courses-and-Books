@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 import config as cfg
 
 
@@ -91,9 +92,14 @@ def update_auction_data(update_all=False):
     }
 
     df.rename(columns=col_names, inplace=True)
-    df["auction_date"] = df["auction_date"].str.replace(" 00:00:00", "")
-    df["maturity_date"] = df["maturity_date"].str.replace(" 00:00:00", "")
-    df["settlement_date"] = df["settlement_date"].str.replace(" 00:00:00", "")
+
+    # return df
+    # try:
+    # df["auction_date"] = df["auction_date"].str.replace(" 00:00:00", "")
+    # df["maturity_date"] = df["maturity_date"].str.replace(" 00:00:00", "")
+    # df["settlement_date"] = df["settlement_date"].str.replace(" 00:00:00", "")
+    # except:
+    #     pass
 
     df_total = pd.concat([df_total, df])
     df_total.drop_duplicates(inplace=True)
@@ -102,6 +108,5 @@ def update_auction_data(update_all=False):
     df_total.to_csv("data/brl_tsy_auctions.csv", index=False)
 
 
-update_auction_data()
 _nr_auctions = get_df_nr_auctions()
 _volume = get_df_mean_volume()

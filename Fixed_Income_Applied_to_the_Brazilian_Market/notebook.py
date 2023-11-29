@@ -4,22 +4,72 @@ import get_dataframe as dfp
 import plot_functions as pf
 import config as cfg
 
-# dft = cfg.df.query('auction_type == "Venda"')
-# df_extra = cfg.df.query(
-#     'auction_type == "Extra Compra" | auction_type == "Extra Venda"'
-# )
-# df_extra.query('auction_date >= "2018-05-01" & auction_date <= "2018-07-01"')[
-#     "auction_date"
-# ].unique()
-df_auction_date
-
 df = cfg.df.copy()
+df["auction_type"].unique()
+# array(['Venda', 'Troca', 'Compra', 'Extra Compra', 'Extra Venda'],
 df["total_amount_accepted"] = df["total_amount_accepted"].astype(int)
 df["total_amount_accepted"] = df["total_amount_accepted"] / 1000000000
 df["total_amount_accepted"] = df["total_amount_accepted"].round(2)
+# df_b = df.query('bond_type == "NTN-B"')
+# df_b = df.query('bond_type == "NTN-B" and auction_type == "Compra" or auction_type == "Extra Compra"')
+df_b = df.query(
+    'bond_type == "NTN-B" and auction_type == "Extra Venda" or auction_type=="Extra Compra"'
+)
+# df_b = df.query(
+#     'auction_type == "Extra Venda" or auction_type=="Extra Compra"'
+# )
+# df_b = df.query('bond_type == "NTN-B" and auction_type == "Venda" or auction_type == "Extra Venda"')
+df_b["auction_date"] = pd.to_datetime(df_b["auction_date"])
+df_b["year"] = df_b["auction_date"].dt.year
+df_b.rename(columns={"total_amount_accepted": "Volume (R$ bi)"}, inplace=True)
+# Multiply by -1 the auctions type "Compra" and "Extra Compra"
+# df_b.loc[df_b['auction_type'] == 'Compra', 'Volume (R$ bi)'] = df_b['Volume (R$ bi)'] * -1
+# df_b.loc[df_b['auction_type'] == 'Extra Compra', 'Volume (R$ bi)'] = df_b['Volume (R$ bi)'] * -1
+
+df_b["auction_type"]
+df.query('auction_type == "Extra Compra"')
+df_b
+
+chart_b = (
+    alt.Chart(df_b, title="Leilões Extraordinários de NTN-B")
+    .mark_circle(size=20, color="red")
+    .encode(
+        alt.X(
+            "auction_date:T",
+            axis=alt.Axis(
+                format="%b%y",
+                labelFontSize=16,
+                titleFontSize=16,
+                title="Data do Leilão",
+            ),
+            scale=alt.Scale(
+                domain=["2015-07-01", "2021-01-01"]
+                # domain=[5.3597 - (5.365 - 4.7259), 5.3597 + (5.365 - 4.7259)]
+            ),
+        ),
+        alt.Y(
+            "maturity_date:T",
+            axis=alt.Axis(
+                format="%Y", labelFontSize=12, titleFontSize=16, title="Vencimento"
+            ),
+        ),
+        # color=alt.condition(
+        #     alt.datum.year % 2 == 0, alt.value("blue"), alt.value("red")
+        # ),
+        size="Volume (R$ bi):Q",
+        color="auction_type:N",
+    )
+    .properties(width=1000, height=600)
+    .configure_legend(labelFontSize=16, titleFontSize=16)
+)
+
+
+chart_b.save("charts/b.html")
+
+len(df["bond"].unique())
 df_auction_date = df.query('auction_type == "Extra Compra"')
-df_extrav = df.query("auction_type == 'Extra Venda'")
-df_extrac = df.query("auction_type == 'Extra Compra'")
+# df_extrav = df.query("auction_type == 'Extra Venda'")
+# df_extrac = df.query("auction_type == 'Extra Compra'")
 df_auction_date.drop(
     [
         "auction_type",
