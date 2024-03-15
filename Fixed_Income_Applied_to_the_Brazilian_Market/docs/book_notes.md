@@ -12,6 +12,9 @@ $$
     R _{t,T} = R _{t}(\tau) = \left( \frac{V _{T}}{V _{t}}\right)^{1/\tau} - 1 \tag{1.1}
 \end{equation}
 $$
+![image](/img/discrete_spot_rate.png =600x400)
+
+
 and the continuous spot rate (denoted by $r _{t,T}$ or $r _{t}(\tau)$) is defined by:
 $$
 \begin{equation}

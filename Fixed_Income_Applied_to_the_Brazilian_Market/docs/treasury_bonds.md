@@ -2,7 +2,9 @@
 
 The figure 1 shows the number of auctions per year for the Braziian Treasury Bonds.
 
-![image](img/nr_auctions.svg) ![image](img/vol_auctions.svg)
+![image](/img/nr_auctions.svg) 
+
+![image](/img/vol_auctions.svg)
 
 #### LTN
 

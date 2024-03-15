@@ -5,6 +5,7 @@ import plot_functions as pf
 import config as cfg
 
 df = cfg.df.copy()
+df
 df["auction_type"].unique()
 # array(['Venda', 'Troca', 'Compra', 'Extra Compra', 'Extra Venda'],
 df["total_amount_accepted"] = df["total_amount_accepted"].astype(int)
