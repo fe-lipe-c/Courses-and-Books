@@ -1,0 +1,16 @@
+[0] Config.pm:308> INFO - This is Biber 2.20
+[0] Config.pm:311> INFO - Logfile is 'book_notes.blg'
+[40] biber:340> INFO - === Fri Jan  3, 2025, 18:34:14
+[48] Biber.pm:420> INFO - Reading 'book_notes.bcf'
+[84] Biber.pm:994> INFO - Found 1 citekeys in bib section 0
+[93] Biber.pm:4463> INFO - Processing section 0
+[98] Biber.pm:4654> INFO - Looking for bibtex file 'References.bib' for section 0
+[98] bibtex.pm:1713> INFO - LaTeX decoding ...
+[100] bibtex.pm:1519> INFO - Found BibTeX data source 'References.bib'
+[119] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[119] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[119] Biber.pm:4283> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[119] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
+[120] bbl.pm:676> INFO - Writing 'book_notes.bbl' with encoding 'UTF-8'
+[120] bbl.pm:677> INFO - Converting UTF-8 to TeX macros on output to .bbl
+[121] bbl.pm:779> INFO - Output to book_notes.bbl
