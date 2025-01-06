@@ -83,7 +83,7 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 			\endist
 		\end{istgame}
 
-		Note that player II could have choosen $ (1,0,0) $, guaranteeing a win, implying that $ (1,2,0) $ choosen by player I at the first node wasn't a good one. In this case, a strategy guaranteeing a win to I would be:
+		Note that player II could have choosen $ (1,0,0) $, guaranteeing a win, implying that $ (1,2,0) $ choosen by player I at the first node wasn't a good one. In this case, a way guaranteeing a win to I would be:
 
 		\vspace{0.5cm}
 		\begin{istgame}[sloped,font=\tiny]
@@ -133,7 +133,49 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 		\item Sergey then proposes a candidate (who may be one of the previously proposed candidates).
 		\item A candidate who receives the support of two of the partners is accepted into the firm. If no candidate has the support of two partners, all three candidates are rejected.
 	\end{itemize}
-	\begin{response}
+	\begin{response}\\
+		Let's define the players Eric, Larry and Sergey as $ E, L $ and $ S $, respectively, and the choices Lee, Rebecca or John as $ L,R $ and $ J $, respectively. Bellow, we depict part of the game tree.\\
+		\vspace{0.5cm}
+
+		\begin{istgame}[sloped,font=\tiny]
+			\setistgrowdirection'{east}
+			\setistOvalNodeStyle{.6cm}
+			\istrooto'(x0){E}+{12.5mm}..{3.45cm}+
+			\istb{l}[above] \istb{r}[above] \istb{j}[above] \endist
+			\xtShowEndPoints[oval node, minimum size=6pt]
+			\xtdistance{52.5mm}{11.5mm}
+			\istrooto(x1)(x0-1){L}
+			\istb{l}[above]
+			\istb{r}[above]
+			\istb{j}[above]
+			\endist
+			\istrooto(x2)(x0-2){L}
+			\istb{l}[above]
+			\istb{r}[above]
+			\istb{j}[above]
+			\endist
+			\istrooto(x3)(x0-3){L}
+			\istb{l}[above]
+			\istb{r}[above]
+			\istb{j}[above]
+			\endist
+			\istrooto(x4)(x1-1){S}+{30.5mm}..{0.45cm}+
+			\istb*{l}[above]{\text{Lee wins}}
+			\istb*{r}[above]{\text{Lee wins}}
+			\istb*{j}[above]{\text{Lee wins}}
+			\endist
+			\istrooto(x5)(x1-2){S}+{30.5mm}..{0.45cm}+
+			\istb*{l}[above]{\text{Lee wins}}
+			\istb*{r}[above]{\text{Rebecca wins}}
+			\istb*{j}[above]{\text{None}}
+			\endist
+			\istrooto(x6)(x1-3){S}+{30.5mm}..{0.45cm}+
+			\istb*{l}[above]{\text{Lee wins}}
+			\istb*{r}[above]{\text{None}}
+			\istb*{j}[above]{\text{John wins}}
+			\endist
+		\end{istgame}
+
 	\end{response}
 \end{exercise}
 
