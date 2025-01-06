@@ -1,11 +1,13 @@
-\documentclass[12pt]{article}
+\documentclass[10pt]{report}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{bm}
 \usepackage{istgame}
+\usepackage[margin=1in]{geometry}  % or any other size like 2cm, 25mm, etc.
 \usepackage[backend=biber,style=numeric,citestyle=nature]{biblatex}
+% \usepackage{showframe}
 
 \addbibresource{references.bib}
 
@@ -14,6 +16,14 @@
 
 \newcommand{\DOI}{https://github.com/fe-lipe-c}
 \newcommand{\monthyear}{Month Year}
+
+\newenvironment{exercise}[1]
+    {\vspace{0.5cm}\hrule\vspace{0.5cm}\noindent\fbox{#1}\\}
+    {\vspace{0.5cm}}
+
+\newenvironment{response}
+{\vspace{0.2cm}\noindent\colorbox{red}{resolution}}
+    {\vspace{0.5cm}}
 
 \emergencystretch=1em
 
@@ -43,336 +53,495 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 
 \section{Chapter 3}
 
-\fbox{3.0}\\
-template\\
-\colorbox{gray}{response}
-\vspace{0.5cm}\\
-\fbox{3.1}\\
-Describe the following situation as an extensive-form game. Three piles of matches are on a table. One pile contains a single match, a second pile contains two matches, and the third pile contains three matches. Two players alternately remove matches from the table. In each move, the player whose turn it is to act at that move may remove matches from one and only one pile, and must remove at least one match. The player who removes the last match loses the game.\\
-By drawing arrows on the game tree, identify a way that one of the players can guarantee victory.\\
-\colorbox{gray}{response}
+\begin{exercise}{3.1}
+	Describe the following situation as an extensive-form game. Three piles of matches are on a table. One pile contains a single match, a second pile contains two matches, and the third pile contains three matches. Two players alternately remove matches from the table. In each move, the player whose turn it is to act at that move may remove matches from one and only one pile, and must remove at least one match. The player who removes the last match loses the game. By drawing arrows on the game tree, identify a way that one of the players can guarantee victory.
+
+	\begin{response}\\
+		We define each player as I and II. Without loss of generality, consider that the player I starts the game. First, let's draw one path that the game can go, where the the player I wins. Each node $x_{i}$ in the tree represents which player is active. That is, instead of writing each node $ x_{i} $ in the game tree, we write $J(x_{i})$ instead, where $ J(x_{i}) $ defines the decision maker at $ x_{i} $.
+
+		\vspace{0.5cm}
+		\begin{istgame}[sloped,font=\tiny]
+			\setistOvalNodeStyle{.6cm}
+			\xtShowEndPoints[oval node, minimum size=6pt]
+			\xtdistance{40mm}{10mm}
+			\istrooto[right](x1){I}
+			\istb{(0,2,3)}[above,near end]
+			\istb{(1,1,3)}[above,near end]
+			\istb{(1,0,3)}[above,near end]
+			\istb{(1,2,2)}[above,near end]
+			\istb{(1,2,1)}[above,near end]
+			\istb[draw=blue,thick]{(1,2,0)}[above,near end]
+			\endist
+			\istrooto[right](x2)(x1-6){II}
+			\istb{(0,2,0)}[above]
+			\istb[draw=blue,thick]{(1,1,0)}[above]
+			\istb{(1,0,0)}[above]
+			\endist
+			\istrooto[right](x3)(x2-2){I}
+			\istb*[draw=blue,thick]{(0,1,0)}[above,near end]{\text{I wins}}
+			\istb*{(1,0,0)}[above,near end]{\text{I wins}}
+			\endist
+		\end{istgame}
+
+		Note that player II could have choosen $ (1,0,0) $, guaranteeing a win, implying that $ (1,2,0) $ choosen by player I at the first node wasn't a good one. In this case, a strategy guaranteeing a win to I would be:
+
+		\vspace{0.5cm}
+		\begin{istgame}[sloped,font=\tiny]
+			\setistOvalNodeStyle{.6cm}
+			\xtShowEndPoints[oval node, minimum size=6pt]
+			\xtdistance{28mm}{10mm}
+			\istrooto[right](x1){I}
+			\istb{(0,2,3)}[above,near end]
+			\istb{(1,1,3)}[above,near end]
+			\istb{(1,0,3)}[above,near end]
+			\istb[draw=blue,thick]{(1,2,2)}[above,near end]
+			\istb{(1,2,1)}[above,near end]
+			\istb{(1,2,0)}[above,near end]
+			\endist
+			\istrooto[right](x2)(x1-4){II}
+			\istb{(0,2,2)}[above]
+			\istb{(1,1,2)}[above]
+			\istb{(1,0,2)}[above]
+			\istb[draw=blue,thick]{(1,2,1)}[above]
+			\istb{(1,2,0)}[above]
+			\endist
+			\istrooto[right](x3)(x2-4){I}
+			\istb{(0,2,1)}[above]
+			\istb[draw=blue,thick]{(1,1,1)}[above]
+			\istb{(1,0,1)}[above]
+			\istb{(1,2,0)}[above]
+			\endist
+			\istrooto[right](x4)(x3-2){II}
+			\istb{(0,1,1)}[above]
+			\istb[draw=blue,thick]{(1,0,1)}[above]
+			\istb{(1,1,0)}[above]
+			\endist
+			\istrooto[right](x5)(x4-2){I}
+			\istb*{(0,0,1)}[above,near end]{\text{I wins}}
+			\istb*[draw=blue,thick]{(1,0,0)}[above,near end]{\text{I wins}}
+			\endist
+		\end{istgame}
+
+	\end{response}
+\end{exercise}
+
+\begin{exercise}{3.2}
+	(Candidate choice) Depict the following situation as a game in extensive form. Eric, Larry, and Sergey are senior partners in a law firm. The three are considering candidates for joining their firm. Three candidates are under consideration: Lee, Rebecca, and John. The choice procedure, which reflects the seniority relations between the three law firm partners, is as follows:
+	\begin{itemize}
+		\item Eric makes the initial proposal of one of the candidates.
+		\item Larry follows by proposing a candidate of his own (who may be the same candidate that Eric proposed).
+		\item Sergey then proposes a candidate (who may be one of the previously proposed candidates).
+		\item A candidate who receives the support of two of the partners is accepted into the firm. If no candidate has the support of two partners, all three candidates are rejected.
+	\end{itemize}
+	\begin{response}
+	\end{response}
+\end{exercise}
+
+\begin{exercise}{3.3}
+	(Does aggressiveness pay off?) Depict the following situation as a game in extensive form. A bird is defending its territory. When another bird attempts to invade this territory, the first bird is faced with two alternatives: to stand and fight for its territory, or to flee and seek another place for its home. The payoff to each bird is defined to be the expected number of descendants it will leave for posterity, and these are calculated as follows:
+	\begin{itemize}
+		\item  If the invading bird yields to the defending bird and instead flies to another territory, the payoff is: 6 descendants for the defending bird, 4 descendants for the invading bird.
+		\item If the invading bird presses an attack and the defending bird flies to another territory, the payoff is: 4 descendants for the defending bird, 6 descendants for the invading bird.
+		\item If the invading bird presses an attack and the defending bird stands its ground and fights, the payoff is: 2 descendants for the defending bird, 2 descendants for the invading bird.
+	\end{itemize}
+
+	\begin{response}
+	\end{response}
+\end{exercise}
+
+\begin{exercise}{3.4}
+	Depict the following situation as a game in extensive form. Peter and his three children, Andrew, James, and John, manage a communications corporation. Andrew is the eldest child, James the second-born, and John the youngest of the children. Two candidates have submitted offers for the position of corporate accountant at the communications corporation. The choice of a new accountant is conducted as follows: Peter first chooses two of his three children. The two selected children conduct a meeting to discuss the strengths and weaknesses of each of the two candidates. The elder of the two children then proposes a candidate. The younger of the two children expresses either agreement or disagreement to the proposed candidate. A candidate is accepted to the position only if two children support his candidacy. If neither candidate enjoys the support of two children, both candidates are rejected.
+
+	\begin{response}
+	\end{response}
+
+\end{exercise}
+
+\begin{exercise}{3.5}
+	a. How many strategies has each player got in each of the following three games (the outcomes of the games are not specified in the figures).
+
+	b. Write out in full all the strategies of each player in each of the three games.
+
+	c. How many different plays are possible in each of the games?
+
+	\begin{response}
+	\end{response}
+
+\end{exercise}
+
+\begin{exercise}{3.6}
+	In a single-player game in which at each vertex $x$ that is not the root the player has $m_x$ actions, how many strategies has the player got?
+
+	\begin{response}
+	\end{response}
+\end{exercise}
+
+`3.7` Prove von Neumann’s Theorem (Theorem 3.13 on page 46): in every two-player finite game with perfect information in which the set of outcomes is $O = \{\text{I wins}, \text{II wins}, \text{Draw}\}$, one and only one of the following three alternatives holds:
+
+a. Player I has a winning strategy.
+
+b. Player II has a winning strategy.
+
+c. Each of the two players has a strategy guaranteeing at least a draw.
+
+Where does your proof make use of the assumption that the game is finite?
+
 \vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.8` (Tic-Tac-Toe) How many strategies has Player I got in Tic-Tac-Toe, in which two players play on a $3\times 3$ board, as depicted in Figure 3.12? Player I makes the first move, and each player in turn chooses a square that has not previously been selected. Player I places an X in every square that he chooses, and Player II places an O in every square that he chooses. The game ends when every square has been selected. The first player who has managed to place his mark in three adjoining squares, where those three squares form either a column, a row, or a diagonal, is the winner.4 (Do not attempt to draw a full game tree. Despite the fact that the rules of the game are quite simple, the game tree is exceedingly large. Despite the size of the game tree, with a little experience players quickly learn how to ensure at least a draw in every play of the game.)
 
-Without loss of generality, consider that the player I starts the game.
+Figure 3.12: The board of the game Tic-Tac-Toe, after three moves
+
+Footnote 4: The game, of course, can effectively be ended when one of the players has clearly ensured victory for himself, but calculating the number of strategies in that case is more complicated.
 
 \vspace{0.5cm}
-\begin{istgame}[sloped, above right,font=\tiny]
-	\xtdistance{32mm}{15mm}
-	\istrooto(x1)[box node]{I}
-	\istb{(0,2,3)}[above,near end]
-	\istb{(1,1,3)}[above,near end]
-	\istb{(1,0,3)}[above,near end]
-	\istb{(1,2,2)}[above,near end]
-	\istb{(1,2,1)}[above,near end]
-	\istb{(1,2,0)}[above,near end]
-	\endist
-	\istrooto(x2)(x1-1)[box node]{II}
-	\istb{(0,1,3)}[above,near end]
-	\istb{(0,0,3)}[above,near end]
-	\istb{(0,2,2)}[above,near end]
-	\istb{(0,2,1)}[above,near end]
-	\istb{(0,2,0)}[above,near end]
-	\endist
-\end{istgame}
+\hrule
+\vspace{0.5cm}
+`3.9` By definition, a player's strategy prescribes his selected action at each vertex in the game tree. Consider the following game.
 
+Player I has four strategies, $T_{1}T_{2}$, $T_{1}B_{2}$, $B_{1}T_{2}$, $B_{1}B_{2}$. Two of these strategies, $B_{1}T_{2}$ and $B_{1}B_{2}$, regardless of the strategy used by Player II, yield the same play of the game, because if Player I has selected action $B_{1}$ at the root vertex, he will never get to his second decision vertex. We can therefore eliminate one of these two strategies and define a \textit{reduced strategy} $B_{1}$, which only stipulates that Player I chooses $B_{1}$ at the root of the game. In the game appearing in the above figure, the reduced strategies of Player I are $T_{1}T_{2}$, $T_{1}B_{2}$, and $B_{1}$. The reduced strategies of Player II are the same as his regular strategies, $t_{1}t_{2}$, $t_{1}b_{2}$, $b_{1}t_{2}$, and $b_{1}b_{2}$, because Player II does not know to which vertex Player I's choice will lead. Formally, a \textit{reduced strategy} $\tau_{i}$ of player $i$ is a function from a subcollection $\widehat{\mathcal{U}_{i}}$ of player $i$'s collection of information sets to actions, satisfying the following two conditions:
 
-% `3.2` (Candidate choice) Depict the following situation as a game in extensive form. Eric, Larry, and Sergey are senior partners in a law firm. The three are considering candidates for joining their firm. Three candidates are under consideration: Lee, Rebecca, and John. The choice procedure, which reflects the seniority relations between the three law firm partners, is as follows:
+i. For any strategy vector of the remaining players $\sigma_{-i}$, given the vector $(\tau_{i},\sigma_{-i})$, the game will definitely not get to an information set of player $i$ that is not in the collection $\widehat{\mathcal{U}_{i}}$.
 
+ii. There is no strict subcollection of $\widehat{\mathcal{U}_{i}}$ satisfying condition (i).
 
-% * Eric makes the initial proposal of one of the candidates.
-% * Larry follows by proposing a candidate of his own (who may be the same candidate that Eric proposed).
-% * Sergey then proposes a candidate (who may be one of the previously proposed candidates).
-% * A candidate who receives the support of two of the partners is accepted into the firm. If no candidate has the support of two partners, all three candidates are rejected.
+a. List the reduced strategies of each of the players in the game depicted in the following figure.
 
-% `3.3` (Does aggressiveness pay off?) Depict the following situation as a game in extensive form. A bird is defending its territory. When another bird attempts to invade this territory, the first bird is faced with two alternatives: to stand and fight for its territory, or to flee and seek another place for its home. The payoff to each bird is defined to be the expected number of descendants it will leave for posterity, and these are calculated as follows:
+b. What outcome of the game will obtain if the three players make use of the reduced strategies $\{(B_{1}),(t_{1},t_{3}),(\beta_{1},\tau_{2})\}$?
 
-% * If the invading bird yields to the defending bird and instead flies to another territory, the payoff is: 6 descendants for the defending bird, 4 descendants for the invading bird.
-% * If the invading bird presses an attack and the defending bird flies to another territory, the payoff is: 4 descendants for the defending bird, 6 descendants for the invading bird.
-% * If the invading bird presses an attack and the defending bird stands its ground and fights, the payoff is: 2 descendants for the defending bird, 2 descendants for the invading bird.
+c. Can any player increase his payoff by unilaterally making use of a different strategy (assuming that the other two players continue to play according to the strategies of part (b))?
 
-% `3.4` Depict the following situation as a game in extensive form. Peter and his three children, Andrew, James, and John, manage a communications corporation. Andrew is the eldest child, James the second-born, and John the youngest of the children. Two candidates have submitted offers for the position of corporate accountant at the communications corporation. The choice of a new accountant is conducted as follows: Peter first chooses two of his three children. The two selected children conduct a meeting to discuss the strengths and weaknesses of each of the two candidates. The elder of the two children then proposes a candidate. The younger of the two children expresses either agreement or disagreement to the proposed candidate. A candidate is accepted to the position only if two children support his candidacy. If neither candidate enjoys the support of two children, both candidates are rejected.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.10` Consider the game in the following figure
 
-% `3.5`
+The outcomes $O_{1}$, $O_{2}$, and $O_{3}$ are distinct and taken from the set {I wins, II wins, Draw}.
 
-% a. How many strategies has each player got in each of the following three games (the outcomes of the games are not specified in the figures).
+a. Is there a choice of $O_{1}$, $O_{2}$, and $O_{3}$ such that Player I can guarantee victory for himself? Justify your answer.
 
-% b. Write out in full all the strategies of each player in each of the three games.
+b. Is there a choice of $O_{1}$, $O_{2}$, and $O_{3}$ such that Player II can guarantee victory for himself? Justify your answer.
 
-% c. How many different plays are possible in each of the games?
+c. Is there a choice of $O_{1}$, $O_{2}$, and $O_{3}$ such that both players can guarantee for themselves at least a draw? Justify your answer.
 
-% 3.6 In a single-player game in which at each vertex $x$ that is not the root the player has $m_x$ actions, how many strategies has the player got?
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.11` (The Battle of the Sexes) The game in this exercise, called Battle of the Sexes, is an oft-quoted example in game theory (see also Example 4.21 on page 4.21). The name given to the game comes from the story often attached to it: a couple is trying to determine how to spend their time next Friday night. The available activities in their town are attending a concert ($C$), or watching a football match ($F$). The man prefers football, while the woman prefers the concert, but both of them prefer being together to spending time apart.
 
-% `3.7` Prove von Neumann’s Theorem (Theorem 3.13 on page 46): in every two-player finite game with perfect information in which the set of outcomes is $O = \{\text{I wins}, \text{II wins}, \text{Draw}\}$, one and only one of the following three alternatives holds:
+The pleasure each member of the couple receives from the available alternatives is quantified as follows:
 
-% a. Player I has a winning strategy.
+* From watching the football match together: 2 for the man, 1 for the woman.
+* From attending the concert together: 1 for the man, 2 for the woman.
+* From spending time apart: 0 for the man, 0 for the woman.
 
-% b. Player II has a winning strategy.
+The couple do not communicate well with each other, so each one chooses where he or she will go on Friday night before discovering what the other selected, and refuses to change his or her mind (alternatively, we can imagine each one going directly to his or her choice directly from work, without informing the other). Depict this situation as a game in extensive form.
 
-% c. Each of the two players has a strategy guaranteeing at least a draw.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.12` (The Centipede game5) The game tree appearing in Figure 3.13 depicts a two-player game in extensive form (note that the tree is shortened; there are another 94 choice vertices and another 94 leaves that do not appear in the figure). The payoffs appear as pairs ($x$, $y$), where $x$ is the payoff to Player I (in thousands of dollars) and $y$ is the payoff to Player II (in thousands of dollars). The players make moves in alternating turns, with Player I making the first move.
 
-% Where does your proof make use of the assumption that the game is finite?
+Figure 3.13: The Centipede game (outcomes are in payoffs of thousands of dollars)
 
-% `3.8` (Tic-Tac-Toe) How many strategies has Player I got in Tic-Tac-Toe, in which two players play on a $3\times 3$ board, as depicted in Figure 3.12? Player I makes the first move, and each player in turn chooses a square that has not previously been selected. Player I places an X in every square that he chooses, and Player II places an O in every square that he chooses. The game ends when every square has been selected. The first player who has managed to place his mark in three adjoining squares, where those three squares form either a column, a row, or a diagonal, is the winner.4 (Do not attempt to draw a full game tree. Despite the fact that the rules of the game are quite simple, the game tree is exceedingly large. Despite the size of the game tree, with a little experience players quickly learn how to ensure at least a draw in every play of the game.)
+Every player has a till into which money is added throughout the play of the game. At the root of the game, Player I's till contains \$1,000, and Player II's till is empty. Every player in turn, at her move, can elect either to stop the game ($S$), in which case every player receives as payoff the amount of money in her till, or to continue to play. Each time a player elects to continue the game, she removes \$1,000 from his till and places them in the other player's till, while simultaneously the game-master adds another \$2,000 to the other player's till. If no player has stopped the game after 100 turns have passed, the game ends, and each player receives the amount of money in her till at that point.
 
-% Figure 3.12: The board of the game Tic-Tac-Toe, after three moves
+How would you play this game in the role of Player I? Justify your answer!
 
-% Footnote 4: The game, of course, can effectively be ended when one of the players has clearly ensured victory for himself, but calculating the number of strategies in that case is more complicated.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.13` Consider the following game. Two players, each in turn, place a quarter on a round table, in such a way that the coins are never stacked one over another (although the coins may touch each other); every quarter must be placed fully on the table. The first player who cannot place an additional quarter on the table at his turn, without stacking it on an already placed quarter, loses the game (and the other player is the winner). Prove that the opening player has a winning strategy.
 
-% `3.9` By definition, a player's strategy prescribes his selected action at each vertex in the game tree. Consider the following game.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.14` Nim is a two-player game, in which piles of matches are placed before the players (the number of piles in the game is finite, and each pile contains a finite number of matches). Each player in turn chooses a pile, and removes any number of matches from the pile he has selected (he must remove at least one match). The player who removes the last match wins the game.
 
-% Player I has four strategies, $T_{1}T_{2}$, $T_{1}B_{2}$, $B_{1}T_{2}$, $B_{1}B_{2}$. Two of these strategies, $B_{1}T_{2}$ and $B_{1}B_{2}$, regardless of the strategy used by Player II, yield the same play of the game, because if Player I has selected action $B_{1}$ at the root vertex, he will never get to his second decision vertex. We can therefore eliminate one of these two strategies and define a _reduced strategy_$B_{1}$, which only stipulates that Player I chooses $B_{1}$ at the root of the game. In the game appearing in the above figure, the reduced strategies of Player I are $T_{1}T_{2}$, $T_{1}B_{2}$, and $B_{1}$. The reduced strategies of Player II are the same as his regular strategies, $t_{1}t_{2}$, $t_{1}b_{2}$, $b_{1}t_{2}$, and $b_{1}b_{2}$, because Player II does not know to which vertex Player I's choice will lead. Formally, a _reduced strategy_$\tau_{i}$ of player $i$ is a function from a subcollection $\widehat{\mathcal{U}_{i}}$ of player $i$'s collection of information sets to actions, satisfying the following two conditions:
+a. Does von Neumann's Theorem (Theorem 3.13 on page 3.13) imply that one of the players must have a winning strategy? Justify your answer!
 
-% i. For any strategy vector of the remaining players $\sigma_{-i}$, given the vector $(\tau_{i},\sigma_{-i})$, the game will definitely not get to an information set of player $i$ that is not in the collection $\widehat{\mathcal{U}_{i}}$.
+We present here a series of guided exercises for constructing a winning strategy in the game of Nim.
 
-% ii. There is no strict subcollection of $\widehat{\mathcal{U}_{i}}$ satisfying condition (i).
+At the beginning of play, list, in a column, the number of matches in each pile, expressed in base 2. For example, if there are 4 piles containing, respectively, 2, 12, 13, and 21 matches, list:
 
-% a. List the reduced strategies of each of the players in the game depicted in the following figure.
+$$\begin{array}{c}10\\ 1100\\ 1101\\ 10101\end{array}$$
 
-% b. What outcome of the game will obtain if the three players make use of the reduced strategies $\{(B_{1}),(t_{1},t_{3}),(\beta_{1},\tau_{2})\}$?
+Next, check whether the number of 1s in each column is odd or even. In the above example, counting from the right, in the first and fourth columns the number of 1s is even, while in the second, third, and fifth columns the number of 1s is odd.
 
-% c. Can any player increase his payoff by unilaterally making use of a different strategy (assuming that the other two players continue to play according to the strategies of part (b))?
+A position in the game will be called a "winning position" if the number of 1s in each column is even. The game state depicted above is not a winning position.
 
-% `3.10` Consider the game in the following figure
+b. Prove that, starting from any position that is not a winning position, it is possible to get to a winning position in one move (that is, by removing matches from a single pile). In our example, if 18 matches are removed from the largest pile, the remaining four piles will have 2, 12, 13, and 3 matches, respectively, which in base 2 are represented as
 
-% The outcomes $O_{1}$, $O_{2}$, and $O_{3}$ are distinct and taken from the set {I wins, II wins, Draw}.
+$$\begin{array}{c}10\\ 1100\\ 1101\\ 11\end{array}$$
 
-% a. Is there a choice of $O_{1}$, $O_{2}$, and $O_{3}$ such that Player I can guarantee victory for himself? Justify your answer.
+which is a winning position, as every column has an even number of 1s.
 
-% b. Is there a choice of $O_{1}$, $O_{2}$, and $O_{3}$ such that Player II can guarantee victory for himself? Justify your answer.
+c. Prove that at a winning position, every legal action leads to a non-winning position.
 
-% c. Is there a choice of $O_{1}$, $O_{2}$, and $O_{3}$ such that both players can guarantee for themselves at least a draw? Justify your answer.
+d. Explain why at the end of every play of the game, the position of the game will be a winning position.
 
-% `3.11` (The Battle of the Sexes) The game in this exercise, called Battle of the Sexes, is an oft-quoted example in game theory (see also Example 4.21 on page 4.21). The name given to the game comes from the story often attached to it: a couple is trying to determine how to spend their time next Friday night. The available activities in their town are attending a concert ($C$), or watching a football match ($F$). The man prefers football, while the woman prefers the concert, but both of them prefer being together to spending time apart.
+e. Explain how we can identify which player can guarantee victory for himself (given the initial number of piles of matches and the number of matches in each pile), and describe that player's winning strategy.
 
-% The pleasure each member of the couple receives from the available alternatives is quantified as follows:
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.15` The game considered in this exercise is exactly like the game of Nim of the previous exercise, except that here the player who removes the last match loses the game. (The game described in Exercise 3.1 is an example of such a game.)
 
-% * From watching the football match together: 2 for the man, 1 for the woman.
-% * From attending the concert together: 1 for the man, 2 for the woman.
-% * From spending time apart: 0 for the man, 0 for the woman.
+a. Is it possible for one of the players in this game to guarantee victory? Justify your answer.
 
-% The couple do not communicate well with each other, so each one chooses where he or she will go on Friday night before discovering what the other selected, and refuses to change his or her mind (alternatively, we can imagine each one going directly to his or her choice directly from work, without informing the other). Depict this situation as a game in extensive form.
+b. Explain how we can identify which player can guarantee victory for himself in this game (given the initial number of piles of matches and the number of matches in each pile), and describe that player's winning strategy.
 
-% `3.12` (The Centipede game5) The game tree appearing in Figure 3.13 depicts a two-player game in extensive form (note that the tree is shortened; there are another 94 choice vertices and another 94 leaves that do not appear in the figure). The payoffs appear as pairs ($x$, $y$), where $x$ is the payoff to Player I (in thousands of dollars) and $y$ is the payoff to Player II (in thousands of dollars). The players make moves in alternating turns, with Player I making the first move.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.16` Answer the following questions relating to David Gale's game of Chomp (see Section 3.4 on page 3.4).
 
-% Figure 3.13: The Centipede game (outcomes are in payoffs of thousands of dollars)
+a. Which of the two players has a winning strategy in a game of Chomp played on a 2 $\times$$\infty$ board? Justify your answer. Describe the winning strategy.
 
-% Every player has a till into which money is added throughout the play of the game. At the root of the game, Player I's till contains \$1,000, and Player II's till is empty. Every player in turn, at her move, can elect either to stop the game ($S$), in which case every player receives as payoff the amount of money in her till, or to continue to play. Each time a player elects to continue the game, she removes \$1,000 from his till and places them in the other player's till, while simultaneously the game-master adds another \$2,000 to the other player's till. If no player has stopped the game after 100 turns have passed, the game ends, and each player receives the amount of money in her till at that point.
+			b. Which of the two players has a winning strategy in a game of Chomp played on an $m$$\times$$\infty$ board, where $m$ is any finite integer? Justify your answer. Describe the winning strategy.
 
-% How would you play this game in the role of Player I? Justify your answer!
+			c. Find two winning strategies for Player I in a game of Chomp played on an $\infty\times$$\infty$ board.
 
-% `3.13` Consider the following game. Two players, each in turn, place a quarter on a round table, in such a way that the coins are never stacked one over another (although the coins may touch each other); every quarter must be placed fully on the table. The first player who cannot place an additional quarter on the table at his turn, without stacking it on an already placed quarter, loses the game (and the other player is the winner). Prove that the opening player has a winning strategy.
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.17` Show that the conclusion of von Neumann's Theorem (Theorem 3.13, page 3.16) does not hold for the Matching Pennies game (Example 3.20, page 3.21), where we interpret the payoff (1, $-$1) as victory for Player I and the payoff ($-$1, 1) as victory for Player II. Which condition in the statement of the theorem fails to obtain in Matching Pennies?
 
-% `3.14` Nim is a two-player game, in which piles of matches are placed before the players (the number of piles in the game is finite, and each pile contains a finite number of matches). Each player in turn chooses a pile, and removes any number of matches from the pile he has selected (he must remove at least one match). The player who removes the last match wins the game.
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.18` Prove that von Neumann's Theorem (Theorem 3.13, page 3.16) holds in games in extensive form with perfect information and without chance moves, in which the game tree has a countable number of vertices, but the depth of every vertex is bounded; i.e., there exists a positive integer $K$ that is greater than the length of every path in the game tree.
 
-% a. Does von Neumann's Theorem (Theorem 3.13 on page 3.13) imply that one of the players must have a winning strategy? Justify your answer!
+		Figure 3.14: The Hex game board for $n=6$ (in the play depicted here, dark is the winner)
 
-% We present here a series of guided exercises for constructing a winning strategy in the game of Nim.
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.19` (Hex) Hex7 is a two-player game conducted on a rhombus containing $n^{2}$ hexagonal cells, as depicted in Figure 3.14 for $n=6$.
+		Footnote 7: Hex was invented in 1942 by a student named Piet Hein, who called it Polygon. It was reinvented, independently, by John Nash in 1948. The name Hex was given to the game by Parker Bros., who sold a commercial version of it. The proof that the game cannot end in a draw, and that there cannot be two winners, is due to David Gale [1979]. The presentation in this exercise is due to Jack van Rijswijck (see [http://www.cs.ualberta.ca/~javhar/](http://www.cs.ualberta.ca/~javhar/)). The authors thank Taco Hoekwater for assisting them in preparing the figure of the game board.
 
-% At the beginning of play, list, in a column, the number of matches in each pile, expressed in base 2. For example, if there are 4 piles containing, respectively, 2, 12, 13, and 21 matches, list:
+		The players control opposite sides of the rhombus (in the accompanying figure, the names of the players are "Light" and "Dark"). Light controls the south-west ($SW$) and north-east ($NE$) sides, while Dark controls the north-west ($NW$) and south-east sides ($SE$). The game proceeds as follows. Dark has the opening move. Every player in turn chooses an unoccupied hexagon, and occupies it with a colored game piece. A player who manages to connect the two sides he controls with a continuous path8 of hexagons occupied by his pieces is declared a winner. If neither player can do so, a draw is called. We will show that a play of the game can never end in a draw. In Figure 3.14, we depict a play of the game won by Dark. Note that, by the rules, the players can keep placing game pieces until the entire board has been filled, so that a priori it might seem as if it might be possible for both players to win, but it turns out to be impossible, as we will prove. There is, in fact, an intuitive argument for why a draw cannot occur: imagine that one player's game pieces are bodies of water, and the other player's game pieces are dry land. If the water player is a winner, it means that he has managed to create a water channel connecting his sides, through which no land-bridge constructed by the opposing player can cross. We will see that turning this intuitive argument into a formal proof is not at all easy.9
 
-% $$\begin{array}{c}10\\ 1100\\ 1101\\ 10101\end{array}$$
+		Footnote 8: A \textit{continuous path} is a chain of adjacent hexagons, where two hexagons are called “adjacent” if they share a common edge.
 
-% Next, check whether the number of 1s in each column is odd or even. In the above example, counting from the right, in the first and fourth columns the number of 1s is even, while in the second, third, and fifth columns the number of 1s is odd.
+		Footnote 9: This argument is equivalent to Jordan’s Theorem, which states that a closed, continuous curve divides a plane into two parts, in such a way that every continuous curve that connects a point in one of the two disconnected parts with a point in the other part must necessarily pass through the original curve.
 
-% A position in the game will be called a "winning position" if the number of 1s in each column is even. The game state depicted above is not a winning position.
+		For simplicity, assume that the edges of the board, as in Figure 3.14, are also composed of (half) hexagons. The hexagons composing each edge will be assumed to be colored with the color of the player who controls that respective edge of the board. Given a fully covered board, we construct a broken line (which begins at the corner labeled W ). Every leg of the broken line separates a game piece of one color from a game piece of the other color (see Figure 3.14).
 
-% b. Prove that, starting from any position that is not a winning position, it is possible to get to a winning position in one move (that is, by removing matches from a single pile). In our example, if 18 matches are removed from the largest pile, the remaining four piles will have 2, 12, 13, and 3 matches, respectively, which in base 2 are represented as
+		a. Prove that within the board, with the exception of the corners, the line can always be continued in a unique manner.
 
-% $$\begin{array}{c}10\\ 1100\\ 1101\\ 11\end{array}$$
+		b. Prove that the broken line will never return to a vertex through which it previously passed (hint: use induction).
 
-% which is a winning position, as every column has an even number of 1s.
+		c. From the first two claims, and the fact that the board is finite, conclude that the broken line must end at a corner of the board (not the corner from which it starts). Keep in mind that one side of the broken line always touches hexagons of one color (including the hexagons comprising the edges of the rhombus), and the other side of the line always touches hexagons of the other color.
 
-% c. Prove that at a winning position, every legal action leads to a non-winning position.
+		d. Prove that if the broken line ends at corner S, the sides controlled by Dark are connected by dark-colored hexagons, so that Dark has won (as in Figure 3.14). Similarly, if the broken line ends at corner N, Light has won.
 
-% d. Explain why at the end of every play of the game, the position of the game will be a winning position.
+		e. Prove that it is impossible for the broken line to end at corner E.
 
-% e. Explain how we can identify which player can guarantee victory for himself (given the initial number of piles of matches and the number of matches in each pile), and describe that player's winning strategy.
+		f. Conclude that a draw is impossible.
 
-% `3.15` The game considered in this exercise is exactly like the game of Nim of the previous exercise, except that here the player who removes the last match loses the game. (The game described in Exercise 3.1 is an example of such a game.)
+		g. Conclude that it is impossible for both players to win.
 
-% a. Is it possible for one of the players in this game to guarantee victory? Justify your answer.
+		h. Prove that the player with the opening move has a winning strategy.
 
-% b. Explain how we can identify which player can guarantee victory for himself in this game (given the initial number of piles of matches and the number of matches in each pile), and describe that player's winning strategy.
+		Guidance for the last part: Based on von Neumann’s Theorem (Theorem 3.13, page 46), and previous claims, one (and only one) of the players has a winning strategy. Call the player with the opening move Player I, and the other player, Player II. Suppose that Player II has a winning strategy. We will prove then that Player I has a winning strategy too, contradicting von Neumann’s Theorem. The winning strategy for Player I is as follows: in the opening move, place a game piece on any hexagon on the board. Call that game piece the “special piece.” In subsequent moves, play as if (i) you are Player II (and use his winning strategy), (ii) the special piece has not been placed, and (iii) your opponent is Player I. If the strategy requires placing a game piece where the special game piece has already been placed, put a piece on any empty hexagon, and from there on call that game piece the “special piece.”
 
-% `3.16` Answer the following questions relating to David Gale's game of Chomp (see Section 3.4 on page 3.4).
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.20` And-Or is a two-player game played on a full binary tree with a root, of depth n (see Figure 3.15). Every player in turn chooses a leaf of the tree that has not previously been selected, and assigns it the value 1 or 0. After all the leaves have been assigned a value, a value for the entire tree is calculated as in the figure. The first step involves calculating the value of the vertices at one level above the level of the leaves: the value of each such vertex is calculated using the logic “or” function, operating on the values assigned to its children. Next, a value is calculated for each vertex one level up, with that value calculated using the logic “and” function, operating on the values previously calculated for their respective children. The truth tables of the "and" and "or" functions are:10
 
-% a. Which of the two players has a winning strategy in a game of Chomp played on a 2 $\times$$\infty$ board? Justify your answer. Describe the winning strategy.
 
-% 			b. Which of the two players has a winning strategy in a game of Chomp played on an $m$$\times$$\infty$ board, where $m$ is any finite integer? Justify your answer. Describe the winning strategy.
+		| x | y | x and y | x or y |
+		|---|---|---------|--------|
+		| 0 | 0 | 0       | 0      |
+		| 0 | 1 | 0       | 1      |
+		| 1 | 0 | 0       | 1      |
+		| 1 | 1 | 1       | 1      |
 
-% 			c. Find two winning strategies for Player I in a game of Chomp played on an $\infty\times$$\infty$ board.
+		Figure 3.15: A depiction of the game And-Or of depth $n=4$ as an extensive-form game
 
-% 		`3.17` Show that the conclusion of von Neumann's Theorem (Theorem 3.13, page 3.16) does not hold for the Matching Pennies game (Example 3.20, page 3.21), where we interpret the payoff (1, $-$1) as victory for Player I and the payoff ($-$1, 1) as victory for Player II. Which condition in the statement of the theorem fails to obtain in Matching Pennies?
+		Footnote 10: Equivalently, $\text{“x or y”} = x \vee y = max{x, y}$, and $\text{“x and y”} = x \wedge y = min{x, y}$.
 
-% 		`3.18` Prove that von Neumann's Theorem (Theorem 3.13, page 3.16) holds in games in extensive form with perfect information and without chance moves, in which the game tree has a countable number of vertices, but the depth of every vertex is bounded; i.e., there exists a positive integer $K$ that is greater than the length of every path in the game tree.
+		Equivalently, $x$ and $y=\min\{x,\,y\}$ and $x$ or $y=\max\{x,\,y\}$. The values of all the vertices of the tree are alternately calculated in this manner recursively, with the value of each vertex calculated using either the "and" or "or" functions, operating on values calculated for their respective children. Player I wins if the value of the root vertex is 1, and loses if the value of the root vertex is 0. Figure 3.15 shows the end of a play of this game, and the calculations of vertex values by use of the “and” and “or” functions. In this figure, Player I is the winner.
 
-% 		Figure 3.14: The Hex game board for $n=6$ (in the play depicted here, dark is the winner)
+		Answer the following questions:
 
-% 		`3.19` (Hex) Hex7 is a two-player game conducted on a rhombus containing $n^{2}$ hexagonal cells, as depicted in Figure 3.14 for $n=6$.
+		a. Which player has a winning strategy in a game played on a tree of depth two?
 
-% 		Footnote 7: Hex was invented in 1942 by a student named Piet Hein, who called it Polygon. It was reinvented, independently, by John Nash in 1948. The name Hex was given to the game by Parker Bros., who sold a commercial version of it. The proof that the game cannot end in a draw, and that there cannot be two winners, is due to David Gale [1979]. The presentation in this exercise is due to Jack van Rijswijck (see [http://www.cs.ualberta.ca/~javhar/](http://www.cs.ualberta.ca/~javhar/)). The authors thank Taco Hoekwater for assisting them in preparing the figure of the game board.
+		b. Which player has a winning strategy in a game played on a tree of depth 2k, where k is any positive integer? Guidance: To find the winning strategy in a game played on a tree of depth 2k, keep in mind that you can first calculate inductively the winning strategy for a game played on a tree of depth 2k - 2.
 
-% 		The players control opposite sides of the rhombus (in the accompanying figure, the names of the players are "Light" and "Dark"). Light controls the south-west ($SW$) and north-east ($NE$) sides, while Dark controls the north-west ($NW$) and south-east sides ($SE$). The game proceeds as follows. Dark has the opening move. Every player in turn chooses an unoccupied hexagon, and occupies it with a colored game piece. A player who manages to connect the two sides he controls with a continuous path8 of hexagons occupied by his pieces is declared a winner. If neither player can do so, a draw is called. We will show that a play of the game can never end in a draw. In Figure 3.14, we depict a play of the game won by Dark. Note that, by the rules, the players can keep placing game pieces until the entire board has been filled, so that a priori it might seem as if it might be possible for both players to win, but it turns out to be impossible, as we will prove. There is, in fact, an intuitive argument for why a draw cannot occur: imagine that one player's game pieces are bodies of water, and the other player's game pieces are dry land. If the water player is a winner, it means that he has managed to create a water channel connecting his sides, through which no land-bridge constructed by the opposing player can cross. We will see that turning this intuitive argument into a formal proof is not at all easy.9
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.21` Each one of the following figures cannot depict a game in extensive form. For each
+		one, explain why.
 
-% 		Footnote 8: A _continuous path_ is a chain of adjacent hexagons, where two hexagons are called “adjacent” if they share a common edge.
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.22` In each of the following games, Player I has an information set containing more than one vertex. What exactly has Player I "forgotten" (or could "forget") during the play of each game?
 
-% 		Footnote 9: This argument is equivalent to Jordan’s Theorem, which states that a closed, continuous curve divides a plane into two parts, in such a way that every continuous curve that connects a point in one of the two disconnected parts with a point in the other part must necessarily pass through the original curve.
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.23` In which information sets for the following game does Player II know the action taken by Player I?
 
-% 		For simplicity, assume that the edges of the board, as in Figure 3.14, are also composed of (half) hexagons. The hexagons composing each edge will be assumed to be colored with the color of the player who controls that respective edge of the board. Given a fully covered board, we construct a broken line (which begins at the corner labeled W ). Every leg of the broken line separates a game piece of one color from a game piece of the other color (see Figure 3.14).
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.24` Sketch the information sets in the following game tree in each of the situations described in this exercise.
 
-% 		a. Prove that within the board, with the exception of the corners, the line can always be continued in a unique manner.
+		a. Player II does not know what Player I selected, while Player III knows what Player I selected, but if Player I moved down, Player III does not know what Player II selected.
 
-% 		b. Prove that the broken line will never return to a vertex through which it previously passed (hint: use induction).
+		b. Player II does not know what Player I selected, and Player III does not know the selections of either Player I or Player II.
 
-% 		c. From the first two claims, and the fact that the board is finite, conclude that the broken line must end at a corner of the board (not the corner from which it starts). Keep in mind that one side of the broken line always touches hexagons of one color (including the hexagons comprising the edges of the rhombus), and the other side of the line always touches hexagons of the other color.
+		c. At every one of his decision points, Player I cannot remember whether or not he has previously made any moves.
 
-% 		d. Prove that if the broken line ends at corner S, the sides controlled by Dark are connected by dark-colored hexagons, so that Dark has won (as in Figure 3.14). Similarly, if the broken line ends at corner N, Light has won.
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.25` For each of the following games:
 
-% 		e. Prove that it is impossible for the broken line to end at corner E.
+		a. List all of the subgames.
 
-% 		f. Conclude that a draw is impossible.
+		b. For each information set, note what the player to whom the information set belongs knows, and what he does not know, at that information set.
 
-% 		g. Conclude that it is impossible for both players to win.
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.26` Only a partial depiction of a game in extensive form is presented in the accompanying figure of this exercise. Sketch the information sets describing each of the following situations.
 
-% 		h. Prove that the player with the opening move has a winning strategy.
+		a. Player II, at his decision points, knows what Player I selected, but does not know the result of the chance move.
 
-% 		Guidance for the last part: Based on von Neumann’s Theorem (Theorem 3.13, page 46), and previous claims, one (and only one) of the players has a winning strategy. Call the player with the opening move Player I, and the other player, Player II. Suppose that Player II has a winning strategy. We will prove then that Player I has a winning strategy too, contradicting von Neumann’s Theorem. The winning strategy for Player I is as follows: in the opening move, place a game piece on any hexagon on the board. Call that game piece the “special piece.” In subsequent moves, play as if (i) you are Player II (and use his winning strategy), (ii) the special piece has not been placed, and (iii) your opponent is Player I. If the strategy requires placing a game piece where the special game piece has already been placed, put a piece on any empty hexagon, and from there on call that game piece the “special piece.”
+		b. Player II, at his decision points, knows the result of the chance move (where relevant). If Player I has selected $T$, Player II knows that this is the case, but if Player I selected either $B$ or $M$, Player II does not know which of these two actions was selected.
 
-% 		`3.20` And-Or is a two-player game played on a full binary tree with a root, of depth n (see Figure 3.15). Every player in turn chooses a leaf of the tree that has not previously been selected, and assigns it the value 1 or 0. After all the leaves have been assigned a value, a value for the entire tree is calculated as in the figure. The first step involves calculating the value of the vertices at one level above the level of the leaves: the value of each such vertex is calculated using the logic “or” function, operating on the values assigned to its children. Next, a value is calculated for each vertex one level up, with that value calculated using the logic “and” function, operating on the values previously calculated for their respective children. The truth tables of the "and" and "or" functions are:10
+		c. Player II, at his decision points, knows both the result of the chance move and any choice made by Player I.
 
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.27`
 
-% 		| x | y | x and y | x or y |
-% 		|---|---|---------|--------|
-% 		| 0 | 0 | 0       | 0      |
-% 		| 0 | 1 | 0       | 1      |
-% 		| 1 | 0 | 0       | 1      |
-% 		| 1 | 1 | 1       | 1      |
+		a. What does Player I know, and what does he not know, at each information set in the following game:
 
-% 		Figure 3.15: A depiction of the game And-Or of depth $n=4$ as an extensive-form game
+		b. How many strategies has Player I got?
 
-% 		Footnote 10: Equivalently, “x or y” = x ∨ y = max{x, y}, and “x and y” = x ∧ y = min{x, y}.
+		c. The outcome of the game is the payment to Player I. What do you recommend Player I should play in this game?
 
-% 		Equivalently, $x$ and $y=\min\{x,\,y\}$ and $x$ or $y=\max\{x,\,y\}$. The values of all the vertices of the tree are alternately calculated in this manner recursively, with the value of each vertex calculated using either the "and" or "or" functions, operating on values calculated for their respective children. Player I wins if the value of the root vertex is 1, and loses if the value of the root vertex is 0. Figure 3.15 shows the end of a play of this game, and the calculations of vertex values by use of the “and” and “or” functions. In this figure, Player I is the winner.
+		\vspace{0.5cm}
+		\hrule
+		\vspace{0.5cm}
+		`3.28` How many strategies has Player II got in the game in the figure in this exercise, in each of the described situations? Justify your answers.
 
-% 		Answer the following questions:
+		a. The information sets of Player II are: $\{A\}, \{B, C\}, \{D, E\}$.
 
-% 		a. Which player has a winning strategy in a game played on a tree of depth two?
+		b. The information sets of Player II are: $\{A, B\}, \{C\}, \{D, E\}$.
 
-% 		b. Which player has a winning strategy in a game played on a tree of depth 2k, where k is any positive integer? Guidance: To find the winning strategy in a game played on a tree of depth 2k, keep in mind that you can first calculate inductively the winning strategy for a game played on a tree of depth 2k − 2.
+		c. The information sets of Player II are: $\{A, B, C\}, \{D, E\}$.
 
-% 		`3.21` Each one of the following figures cannot depict a game in extensive form. For each
-% 		one, explain why.
+		d. The information sets of Player II are: $\{A, B, D\}, \{C\}, \{E\}$.
 
-% 		`3.22` In each of the following games, Player I has an information set containing more than one vertex. What exactly has Player I "forgotten" (or could "forget") during the play of each game?
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.29` Consider the following two-player game.
 
-% 		`3.23` In which information sets for the following game does Player II know the action taken by Player I?
+a. What does Player II know, and what does he not know, at each of his information sets?
 
-% 		`3.24` Sketch the information sets in the following game tree in each of the situations described in this exercise.
+b. Depict the same game as a game in extensive form in which Player II makes his move prior to the chance move, and Player I makes his move after the chance move.
 
-% 		a. Player II does not know what Player I selected, while Player III knows what Player I selected, but if Player I moved down, Player III does not know what Player II selected.
+c. Depict the same game as a game in extensive form in which Player I makes his move prior to the chance move, and Player II makes his move after the chance move.
 
-% 		b. Player II does not know what Player I selected, and Player III does not know the selections of either Player I or Player II.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.30` Depict the following situation as a game in extensive form. Two corporations manufacturing nearly identical chocolate bars are independently considering whether or not to increase their advertising budgets by \$500,000. The sales experts of both corporations are of the opinion that if both corporations increase their advertising budgets, they will each get an equal share of the market, and the same result will ensue if neither corporation increases its advertising budget. In contrast, if one corporation increases its advertising budget while the other maintains the same level of advertising, the corporation that increases its advertising budget will grab an 80\% market share, and the other will be left with a 20\% market share.
 
-% 		c. At every one of his decision points, Player I cannot remember whether or not he has previously made any moves.
+The decisions of the chief executives of the two corporations are made simultaneously; neither one of the chief executives knows what the decision of the other chief executive is at the time he makes his decision.
 
-% 		`3.25` For each of the following games:
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.31` (Investments) Depict the following situation as a game in extensive form. Jack has \$100,000 at his disposal, which he would like to invest. His options include investing in gold for one year; if he does so, the expectation is that there is a probability of 30\% that the price of gold will rise, yielding Jack a profit of \$20,000, and a probability of 70\% that the price of gold will drop, causing Jack to lose \$10,000. Jack can alternatively invest his money in shares of the Future Energies corporation; if he does so, the expectation is that there is a probability of 60\% that the price of the shares will rise, yielding Jack a profit of \$50,000, and a probability of 40\% that the price of the shares will drop to such an extent that Jack will lose his entire investment. Another option open to Jack is placing the money in a safe index-linked money market account yielding a 5\% return.
 
-% 		a. List all of the subgames.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.32` In the game depicted in Figure 16, if Player I chooses $T$, there is an ensuing chance move, after which Player II has a turn, but if Player I chooses $B$, there is no chance move, and Player II has an immediately ensuing turn (without a chance move). The outcome of the game is a pair of numbers ($x$, $y$) in which $x$ is the payoff for Player I and $y$ is the payoff for Player II.
 
-% 		b. For each information set, note what the player to whom the information set belongs knows, and what he does not know, at that information set.
+a. What are all the strategies available to Player I?
 
-% 		`3.26` Only a partial depiction of a game in extensive form is presented in the accompanying figure of this exercise. Sketch the information sets describing each of the following situations.
+b. How many strategies has Player II got? List all of them.
 
-% 		a. Player II, at his decision points, knows what Player I selected, but does not know the result of the chance move.
+c. What is the expected payoff to each player if Player I plays $B$ and Player II plays ($t_{1}$, $b_{2}$, $t_{3}$)?
 
-% 		b. Player II, at his decision points, knows the result of the chance move (where relevant). If Player I has selected $T$, Player II knows that this is the case, but if Player I selected either $B$ or $M$, Player II does not know which of these two actions was selected.
+d. What is the expected payoff to each player if Player I plays $T$ and Player II plays ($t_{1}$, $b_{2}$, $t_{3}$)?
 
-% 		c. Player II, at his decision points, knows both the result of the chance move and any choice made by Player I.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.33` The following questions relate to Figure 16. The outcome of the game is a triple ($x$, $y$, $z$) representing the payoff to each player, with $x$ denoting the payoff to Player I, $y$ the payoff to Player II and $z$ the payoff to Player III.
 
-% 		`3.27`
+The outcome of the game is a pair of numbers, representing a payment to each player.
 
-% 		a. What does Player I know, and what does he not know, at each information set in the following game:
+a. Depict, by drawing arrows, strategies ($a$, $c$, $e$), ($h$, $j$, $l$), and ($m$, $p$, $q$) of the three players.
 
-% 		b. How many strategies has Player I got?
+b. Calculate the expected payoff if the players make use of the strategies in part (a).
 
-% 		c. The outcome of the game is the payment to Player I. What do you recommend Player I should play in this game?
+c. How would you play this game, if you were Player I? Assume that each player is striving to maximize his expected payoff.
 
-% 		`3.28` How many strategies has Player II got in the game in the figure in this exercise, in each of the described situations? Justify your answers.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.34` Bill asks Al to choose heads or tails. After Al has made his choice (without disclosing it to Bill), Bill flips a coin. If the coin falls on Al's choice, Al wins. Otherwise, Bill wins. Depict this situation as a game in extensive form.
 
-% 		a. The information sets of Player II are: $\{A\}, \{B, C\}, \{D, E\}$.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.35` A pack of three cards, labeled 1, 2, and 3, is shuffled. William, Mary, and Anne each take a card from the pack. Each of the two players holding a card with low values (1 or 2) pays the amount of money appearing on the card he or she is holding to the player holding the high-valued card (namely, 3). Depict this situation as a game in extensive form.
 
-% 		b. The information sets of Player II are: $\{A, B\}, \{C\}, \{D, E\}$.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.36` Depict the game trees of the following variants of the candidate game appearing in Exercise 3.2:
 
-% 		c. The information sets of Player II are: $\{A, B, C\}, \{D, E\}$.
+a. Eric does not announce which candidate he prefers until the end of the game. He instead writes down the name of his candidate on a slip of paper, and shows that slip of paper to the others only after Larry and Sergey have announced their preferred candidate.
 
-% 		d. The information sets of Player II are: $\{A, B, D\}, \{C\}, \{E\}$.
+b. A secret ballot is conducted: no player announces his preferred candidate until the end of the game.
 
-% 		`3.29` Consider the following two-player game.
+c. Eric and Sergey keep their candidate preference a secret until the end of the game, but Larry announces his candidate preference as soon as he has made his choice.
 
-% 		a. What does Player II know, and what does he not know, at each of his information sets?
 
-% 		b. Depict the same game as a game in extensive form in which Player II makes his move prior to the chance move, and Player I makes his move after the chance move.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.37` Describe the game Rock, Paper, Scissors as an extensive-form game (if you are unfamiliar with this game, see page $78$ for a description).
 
-% 		c. Depict the same game as a game in extensive form in which Player I makes his move prior to the chance move, and Player II makes his move after the chance move.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.38` Consider the following game. Player I has the opening move, in which he chooses an action in the set $\{L$, $R\}$. A lottery is then conducted, with either $\lambda$ or $\rho$ selected, both with probability $\frac{1}{2}$. Finally, Player II chooses either $l$ or $r$. The outcomes of the game are not specified. Depict the game tree associated with the extensive-form game in each of the following situations:
 
-% 		`3.30` Depict the following situation as a game in extensive form. Two corporations manufacturing nearly identical chocolate bars are independently considering whether or not to increase their advertising budgets by $500,000. The sales experts of both corporations are of the opinion that if both corporations increase their advertising budgets, they will each get an equal share of the market, and the same result will ensue if neither corporation increases its advertising budget. In contrast, if one corporation increases its advertising budget while the other maintains the same level of advertising, the corporation that increases its advertising budget will grab an 80% market share, and the other will be left with a 20% market share.
+a. Player II, at his turn, knows Player I's choice, but does not know the outcome of the lottery.
 
-% 	The decisions of the chief executives of the two corporations are made simultaneously; neither one of the chief executives knows what the decision of the other chief executive is at the time he makes his decision.
+b. Player II, at his turn, knows the outcome of the lottery, but does not know Player I's choice.
 
-% 	`3.31` (Investments) Depict the following situation as a game in extensive form. Jack has $100,000 at his disposal, which he would like to invest. His options include investing in gold for one year; if he does so, the expectation is that there is a probability of 30% that the price of gold will rise, yielding Jack a profit of $20,000, and a probability of 70% that the price of gold will drop, causing Jack to lose $10,000. Jack can alternatively invest his money in shares of the Future Energies corporation; if he does so, the expectation is that there is a probability of 60% that the price of the shares will rise, yielding Jack a profit of $50,000, and a probability of 40% that the price of the shares will drop to such an extent that Jack will lose his entire investment. Another option open to Jack is placing the money in a safe index-linked money market account yielding a 5% return.
+c. Player II, at his turn, knows the outcome of the lottery only if Player I has selected $L$.
 
-% 		`3.32` In the game depicted in Figure 16, if Player I chooses $T$, there is an ensuing chance move, after which Player II has a turn, but if Player I chooses $B$, there is no chance move, and Player II has an immediately ensuing turn (without a chance move). The outcome of the game is a pair of numbers ($x$, $y$) in which $x$ is the payoff for Player I and $y$ is the payoff for Player II.
+d. Player II, at his turn, knows Player I's choice if the outcome of the lottery is $\lambda$, but does not know Player I's choice if the outcome of the lottery is $\rho$.
 
-% 		a. What are all the strategies available to Player I?
+e. Player II, at his turn, does not know Player I's choice, and also does not know the outcome of the lottery.
 
-% 		b. How many strategies has Player II got? List all of them.
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+`3.39` In the following game, the root is a chance move, Player I has three information sets, and the outcome is the amount of money that Player I receives.
 
-% 		c. What is the expected payoff to each player if Player I plays $B$ and Player II plays ($t_{1}$, $b_{2}$, $t_{3}$)?
+a. What does Player I know in each of his information sets, and what does he not know?
 
-% 		d. What is the expected payoff to each player if Player I plays $T$ and Player II plays ($t_{1}$, $b_{2}$, $t_{3}$)?
-
-% 		`3.33` The following questions relate to Figure 16. The outcome of the game is a triple ($x$, $y$, $z$) representing the payoff to each player, with $x$ denoting the payoff to Player I, $y$ the payoff to Player II and $z$ the payoff to Player III.
-
-% 		The outcome of the game is a pair of numbers, representing a payment to each player.
-
-% 		a. Depict, by drawing arrows, strategies ($a$, $c$, $e$), ($h$, $j$, $l$), and ($m$, $p$, $q$) of the three players.
-
-% 		b. Calculate the expected payoff if the players make use of the strategies in part (a).
-
-% 		c. How would you play this game, if you were Player I? Assume that each player is striving to maximize his expected payoff.
-
-% 		`3.34` Bill asks Al to choose heads or tails. After Al has made his choice (without disclosing it to Bill), Bill flips a coin. If the coin falls on Al's choice, Al wins. Otherwise, Bill wins. Depict this situation as a game in extensive form.
-
-% 		`3.35` A pack of three cards, labeled 1, 2, and 3, is shuffled. William, Mary, and Anne each take a card from the pack. Each of the two players holding a card with low values (1 or 2) pays the amount of money appearing on the card he or she is holding to the player holding the high-valued card (namely, 3). Depict this situation as a game in extensive form.
-
-% 		`3.36` Depict the game trees of the following variants of the candidate game appearing in Exercise 3.2:
-
-% 		a. Eric does not announce which candidate he prefers until the end of the game. He instead writes down the name of his candidate on a slip of paper, and shows that slip of paper to the others only after Larry and Sergey have announced their preferred candidate.
-
-% 		b. A secret ballot is conducted: no player announces his preferred candidate until the end of the game.
-
-% 		c. Eric and Sergey keep their candidate preference a secret until the end of the game, but Larry announces his candidate preference as soon as he has made his choice.
-
-
-% 		`3.37` Describe the game Rock, Paper, Scissors as an extensive-form game (if you are unfamiliar with this game, see page $78$ for a description).
-
-% 		`3.38` Consider the following game. Player I has the opening move, in which he chooses an action in the set $\{L$, $R\}$. A lottery is then conducted, with either $\lambda$ or $\rho$ selected, both with probability $\frac{1}{2}$. Finally, Player II chooses either $l$ or $r$. The outcomes of the game are not specified. Depict the game tree associated with the extensive-form game in each of the following situations:
-
-% 		a. Player II, at his turn, knows Player I's choice, but does not know the outcome of the lottery.
-
-% 		b. Player II, at his turn, knows the outcome of the lottery, but does not know Player I's choice.
-
-% 		c. Player II, at his turn, knows the outcome of the lottery only if Player I has selected $L$.
-
-% 		d. Player II, at his turn, knows Player I's choice if the outcome of the lottery is $\lambda$, but does not know Player I's choice if the outcome of the lottery is $\rho$.
-
-% e. Player II, at his turn, does not know Player I's choice, and also does not know the outcome of the lottery.
-
-% `3.39` In the following game, the root is a chance move, Player I has three information sets, and the outcome is the amount of money that Player I receives.
-
-% a. What does Player I know in each of his information sets, and what does he not know?
-
-% b. What would you recommend Player I to play, assuming that he wants to maximize his expected payoff? Justify your answer.
+b. What would you recommend Player I to play, assuming that he wants to maximize his expected payoff? Justify your answer.
 
 
 % \pagebreak
