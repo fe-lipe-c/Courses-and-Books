@@ -160,19 +160,19 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 			\istb{j}[above]
 			\endist
 			\istrooto(x4)(x1-1){S}+{30.5mm}..{0.45cm}+
-			\istb*{l}[above]{\text{Lee wins}}
-			\istb*{r}[above]{\text{Lee wins}}
-			\istb*{j}[above]{\text{Lee wins}}
+			\istb*{l}[above, near end]{\text{Lee wins}}
+			\istb*{r}[above, near end]{\text{Lee wins}}
+			\istb*{j}[above, near end]{\text{Lee wins}}
 			\endist
 			\istrooto(x5)(x1-2){S}+{30.5mm}..{0.45cm}+
-			\istb*{l}[above]{\text{Lee wins}}
-			\istb*{r}[above]{\text{Rebecca wins}}
-			\istb*{j}[above]{\text{None}}
+			\istb*{l}[above, near end]{\text{Lee wins}}
+			\istb*{r}[above, near end]{\text{Rebecca wins}}
+			\istb*{j}[above, near end]{\text{None}}
 			\endist
 			\istrooto(x6)(x1-3){S}+{30.5mm}..{0.45cm}+
-			\istb*{l}[above]{\text{Lee wins}}
-			\istb*{r}[above]{\text{None}}
-			\istb*{j}[above]{\text{John wins}}
+			\istb*{l}[above, near end]{\text{Lee wins}}
+			\istb*{r}[above, near end]{\text{None}}
+			\istb*{j}[above, near end]{\text{John wins}}
 			\endist
 		\end{istgame}
 
@@ -212,7 +212,57 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 \begin{exercise}{3.4}
 	Depict the following situation as a game in extensive form. Peter and his three children, Andrew, James, and John, manage a communications corporation. Andrew is the eldest child, James the second-born, and John the youngest of the children. Two candidates have submitted offers for the position of corporate accountant at the communications corporation. The choice of a new accountant is conducted as follows: Peter first chooses two of his three children. The two selected children conduct a meeting to discuss the strengths and weaknesses of each of the two candidates. The elder of the two children then proposes a candidate. The younger of the two children expresses either agreement or disagreement to the proposed candidate. A candidate is accepted to the position only if two children support his candidacy. If neither candidate enjoys the support of two children, both candidates are rejected.
 
-	\begin{response}
+	\begin{response}\\
+		Each candidate is defined as candidate I and II, corresponding to the actions of the elder sons, between the two choosen by Peter.
+
+		\vspace{0.5cm}
+		\begin{istgame}[sloped,font=\tiny]
+			\setistgrowdirection'{east}
+			\setistOvalNodeStyle{.6cm}
+			\istrooto'(x0){P}+{40mm}..{2cm}+
+			\istb{\text{(Andrew,James)}}[above]
+			\istb{\text{(Andrew,John)}}[above]
+			\istb{\text{(James,John)}}[above]
+			\endist
+			\xtShowEndPoints[oval node, minimum size=6pt]
+			\xtdistance{30mm}{8mm}
+			\istrooto(x1)(x0-1){\text{Andrew}}
+			\istb{\text{I}}[above]
+			\istb{\text{II}}[above]
+			\endist
+			\istrooto(x2)(x0-2){\text{Andrew}}
+			\istb{\text{I}}[above]
+			\istb{\text{II}}[above]
+			\endist
+			\istrooto(x3)(x0-3){\text{James}}
+			\istb{\text{I}}[above]
+			\istb{\text{II}}[above]
+			\endist
+			\istrooto(x4)(x1-1){\text{James}}+{10mm}..{0.3cm}+
+			\istb*{\text{I}}[above]{\text{I accepted}}
+			\istb*{\text{II}}[b]{\text{both rejected}}
+			\endist
+			\istrooto(x5)(x1-2){\text{James}}+{10mm}..{0.3cm}+
+			\istb*{\text{I}}[above]{\text{both rejected}}
+			\istb*{\text{II}}[b]{\text{II accepted}}
+			\endist
+			\istrooto(x6)(x2-1){\text{John}}+{10mm}..{0.3cm}+
+			\istb*{\text{I}}[above]{\text{I accepted}}
+			\istb*{\text{II}}[b]{\text{both rejected}}
+			\endist
+			\istrooto(x7)(x2-2){\text{John}}+{10mm}..{0.3cm}+
+			\istb*{\text{I}}[above]{\text{both rejected}}
+			\istb*{\text{II}}[b]{\text{II accepted}}
+			\endist
+			\istrooto(x8)(x3-1){\text{John}}+{10mm}..{0.3cm}+
+			\istb*{\text{I}}[above]{\text{I accepted}}
+			\istb*{\text{II}}[b]{\text{both rejected}}
+			\endist
+			\istrooto(x9)(x3-2){\text{John}}+{10mm}..{0.3cm}+
+			\istb*{\text{I}}[above]{\text{both rejected}}
+			\istb*{\text{II}}[b]{\text{II accepted}}
+			\endist
+		\end{istgame}
 	\end{response}
 
 \end{exercise}
@@ -220,7 +270,105 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 \begin{exercise}{3.5}
 	a. How many strategies has each player got in each of the following three games (the outcomes of the games are not specified in the figures).
 
+	\begin{response}\\
+		\vspace{0.5cm}
+		Game A\\
+		\vspace{0.5cm}
+		\begin{istgame}[sloped,font=\tiny]
+			\setistgrowdirection'{east}
+			\setistOvalNodeStyle{.6cm}
+			\istrooto'(x0){I}+{20mm}..{2cm}+
+			\istb{T_{1}}[above]
+			\istb*{B_{1}}[above]
+			\endist
+			\xtShowEndPoints[oval node, minimum size=6pt]
+			\xtdistance{20mm}{10mm}
+			\istrooto(x1)(x0-1){II}
+			\istb{t}[above]
+			\istb*{b}[above]
+			\endist
+			\istrooto(x2)(x1-1){I}
+			\istb*{T_{2}}[above]
+			\istb*{M_{2}}[above]
+			\istb*{B_{2}}[above]
+			\endist
+		\end{istgame}
+
+		Define $ s() $
+
+		\vspace{0.5cm}
+		Game B\\
+		\vspace{0.5cm}
+		\begin{istgame}[sloped,font=\tiny]
+			\setistgrowdirection'{east}
+			\setistOvalNodeStyle{.6cm}
+			\istrooto'(x0){I}+{20mm}..{2cm}+
+			\istb{T}[above]
+			\istb{B}[above]
+			\endist
+			\xtShowEndPoints[oval node, minimum size=6pt]
+			\xtdistance{20mm}{10mm}
+			\istrooto(x1)(x0-1){II}+{20mm}..{1cm}+
+			\istb*{t_{1}}[above]
+			\istb*{m_{1}}[above]
+			\istb*{b_{1}}[above]
+			\endist
+			\istrooto(x2)(x0-2){II}+{20mm}..{1cm}+
+			\istb*{t_{2}}[above]
+			\istb*{b_{2}}[above]
+			\endist
+		\end{istgame}
+
+		\vspace{0.5cm}
+		Game C\\
+		\vspace{0.5cm}
+		\begin{istgame}[sloped,font=\tiny]
+			\setistgrowdirection'{east}
+			\setistOvalNodeStyle{.6cm}
+			\istrooto'(x0){I}+{20mm}..{2cm}+
+			\istb*{T_{1}}[above]
+			\istb{M_{1}}[above]
+			\istb*{B_{1}}[above]
+			\endist
+			\xtShowEndPoints[oval node, minimum size=6pt]
+			\xtdistance{20mm}{10mm}
+			\istrooto(x1)(x0-2){II}+{20mm}..{2cm}+
+			\istb{t_{1}}[above]
+			\istb*{m_{1}}[above]
+			\istb{b_{1}}[above]
+			\endist
+			\istrooto(x2)(x1-1){III}+{20mm}..{2cm}+
+			\istb{\tau_{1}}[above]
+			\istb{\beta_{1}}[above]
+			\endist
+			\istrooto(x3)(x1-3){III}+{20mm}..{2cm}+
+			\istb{\tau_{2}}[above]
+			\istb{\beta_{2}}[above]
+			\endist
+			\istrooto(x4)(x2-1){I}+{20mm}..{1cm}+
+			\istb*{T_{2}}[above]
+			\istb*{B_{2}}[above]
+			\endist
+			\istrooto(x5)(x2-2){I}+{20mm}..{1cm}+
+			\istb*{T_{3}}[above]
+			\istb*{B_{3}}[above]
+			\endist
+			\istrooto(x6)(x3-1){II}+{20mm}..{1cm}+
+			\istb*{t_{2}}[above]
+			\istb*{b_{2}}[above]
+			\endist
+			\istrooto(x7)(x3-2){II}+{20mm}..{1cm}+
+			\istb*{t_{3}}[above]
+			\istb*{b_{3}}[above]
+			\endist
+		\end{istgame}
+
+	\end{response}
+
 	b. Write out in full all the strategies of each player in each of the three games.
+
+	\begin{response}
+	\end{response}
 
 	c. How many different plays are possible in each of the games?
 
