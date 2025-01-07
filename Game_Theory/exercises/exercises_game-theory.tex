@@ -187,7 +187,25 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 		\item If the invading bird presses an attack and the defending bird stands its ground and fights, the payoff is: 2 descendants for the defending bird, 2 descendants for the invading bird.
 	\end{itemize}
 
-	\begin{response}
+	\begin{response}\\
+		We define the defending bird as I and the attacking one as II.
+
+		\vspace{0.5cm}
+		\begin{istgame}[sloped,font=\tiny]
+			\setistgrowdirection'{east}
+			\setistOvalNodeStyle{.6cm}
+			\istrooto'(x0){II}+{20mm}..{2cm}+
+			\istb{\text{attack}}[above]
+			\istb*{\text{yield}}[above]{(6,4)}
+			\endist
+			\xtShowEndPoints[oval node, minimum size=6pt]
+			\xtdistance{20mm}{10mm}
+			\istrooto(x1)(x0-1){I}
+			\istb*{\text{fight}}[above]{(2,2)}
+			\istb*{\text{flee}}[above]{(4,6)}
+			\endist
+			\endist
+		\end{istgame}
 	\end{response}
 \end{exercise}
 
