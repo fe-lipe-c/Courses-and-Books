@@ -270,7 +270,10 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 \begin{exercise}{3.5}
 	a. How many strategies has each player got in each of the following three games (the outcomes of the games are not specified in the figures).
 
+
 	\begin{response}\\
+		Define $s_{i}$ as the strategy function for player $ i \in {1,2} $. The strategy function  maps each vertex $ x \in V_{i} $ to an element in $A(x)$.
+
 		\vspace{0.5cm}
 		Game A\\
 		\vspace{0.5cm}
@@ -292,9 +295,24 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 			\istb*{M_{2}}[above]
 			\istb*{B_{2}}[above]
 			\endist
+			\xtOwner(x0){$x_{0}$}[yshift=8pt,above]
+			\xtOwner(x1){$x_{1}$}[yshift=8pt,above]
+			\xtOwner(x2){$x_{2}$}[yshift=8pt,above]
 		\end{istgame}
 
-		Define $ s() $
+		\begin{itemize}
+			\item $ V_{1} = \{x_{1}, x_{3}\} $ and $ V_{1} = \{x_{2}\} $
+			\item $ A(x_{0}) = \{T_{1}, B_{1}\} $, $  A(x_{1}) = \{t, b\} $ and $A(x_{2}) = \{T_{2},M_{2}, B_{2}\}$
+			\item Player I strategies:
+			      \subitem $s_{1}^{1}(x_{0}) = T_{1}$, $s_{1}^{1}(x_{2}) = T_{2}$
+			      \subitem $s_{2}^{1}(x_{0}) = T_{2}$, $s_{2}^{1}(x_{2}) = M_{2}$
+			      \subitem $s_{3}^{1}(x_{0}) = T_{2}$, $s_{3}^{1}(x_{2}) = B_{2}$
+			      \subitem $s_{4}^{1}(x_{0}) = B_{1}$
+			\item Player II strategies:
+			      \subitem $s_{1}^{2}(x_{1}) = t$
+			      \subitem $s_{2}^{2}(x_{1}) = b$
+		\end{itemize}
+
 
 		\vspace{0.5cm}
 		Game B\\
@@ -317,7 +335,22 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 			\istb*{t_{2}}[above]
 			\istb*{b_{2}}[above]
 			\endist
+			\xtOwner(x0){$x_{0}$}[yshift=8pt,above]
+			\xtOwner(x1){$x_{1}$}[yshift=8pt,above]
+			\xtOwner(x2){$x_{2}$}[yshift=8pt,above]
 		\end{istgame}
+
+		\begin{itemize}
+			\item Player I strategies:
+			      \subitem $s_{1}^{1}(x_{0}) = T$
+			      \subitem $s_{2}^{1}(x_{0}) = B$
+			\item Player II strategies:
+			      \subitem $s_{1}^{2}(x_{1}) = t_{1}$
+			      \subitem $s_{2}^{2}(x_{1}) = m_{1}$
+			      \subitem $s_{3}^{2}(x_{1}) = b_{1}$
+			      \subitem $s_{4}^{2}(x_{2}) = t_{2}$
+			      \subitem $s_{5}^{2}(x_{2}) = b_{2}$
+		\end{itemize}
 
 		\vspace{0.5cm}
 		Game C\\
@@ -361,7 +394,33 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 			\istb*{t_{3}}[above]
 			\istb*{b_{3}}[above]
 			\endist
+			\xtOwner(x0){$x_{0}$}[yshift=8pt,above]
+			\xtOwner(x1){$x_{1}$}[yshift=8pt,above]
+			\xtOwner(x2){$x_{2}$}[yshift=8pt,above]
+			\xtOwner(x3){$x_{3}$}[yshift=8pt,above]
+			\xtOwner(x4){$x_{4}$}[yshift=8pt,above]
+			\xtOwner(x5){$x_{5}$}[yshift=8pt,above]
+			\xtOwner(x6){$x_{6}$}[yshift=8pt,above]
+			\xtOwner(x7){$x_{7}$}[yshift=8pt,above]
 		\end{istgame}
+
+		\begin{itemize}
+			\item Player I strategies:
+			      \subitem $s_{1}^{1}(x_{0}) = T_{1}$
+			      \subitem $s_{2}^{1}(x_{0}) = B_{1}$
+			\item Player II strategies:
+			      \subitem $s_{1}^{2}(x_{1}) = t_{1}$
+			      \subitem $s_{2}^{2}(x_{1}) = m_{1}$
+			      \subitem $s_{3}^{2}(x_{1}) = b_{1}$, $s_{3}^{2}(x_{6}) = t_{2}$
+			      \subitem $s_{4}^{2}(x_{1}) = b_{1}$, $s_{4}^{2}(x_{6}) = b_{2}$
+			      \subitem $s_{5}^{2}(x_{1}) = b_{1}$, $s_{5}^{2}(x_{7}) = t_{3}$
+			      \subitem $s_{6}^{2}(x_{1}) = b_{1}$, $s_{6}^{2}(x_{7}) = b_{3}$
+			\item Player III strategies:
+			      \subitem $s_{1}^{3}(x_{2}) = \tau_{1}$
+			      \subitem $s_{2}^{3}(x_{2}) = \beta_{1}$
+			      \subitem $s_{3}^{3}(x_{3}) = \tau_{2}$
+			      \subitem $s_{4}^{3}(x_{3}) = \beta_{2}$
+		\end{itemize}
 
 	\end{response}
 
