@@ -270,9 +270,12 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 \begin{exercise}{3.5}
 	a. How many strategies has each player got in each of the following three games (the outcomes of the games are not specified in the figures).
 
+	b. Write out in full all the strategies of each player in each of the three games.
+
+	c. How many different plays are possible in each of the games?
 
 	\begin{response}\\
-		Define $s_{i}$ as the strategy function for player $ i \in {1,2} $. The strategy function  maps each vertex $ x \in V_{i} $ to an element in $A(x)$.
+		Define $s_{i}$ as the strategy function for player $ i \in \{1,2\} $. The strategy function  maps each vertex $ x \in V_{i} $ to an element in $A(x)$.
 
 		\vspace{0.5cm}
 		Game A\\
@@ -305,14 +308,13 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 			\item $ A(x_{0}) = \{T_{1}, B_{1}\} $, $  A(x_{1}) = \{t, b\} $ and $A(x_{2}) = \{T_{2},M_{2}, B_{2}\}$
 			\item Player I strategies:
 			      \subitem $s_{1}^{1}(x_{0}) = T_{1}$, $s_{1}^{1}(x_{2}) = T_{2}$
-			      \subitem $s_{2}^{1}(x_{0}) = T_{2}$, $s_{2}^{1}(x_{2}) = M_{2}$
-			      \subitem $s_{3}^{1}(x_{0}) = T_{2}$, $s_{3}^{1}(x_{2}) = B_{2}$
+			      \subitem $s_{2}^{1}(x_{0}) = T_{1}$, $s_{2}^{1}(x_{2}) = M_{2}$
+			      \subitem $s_{3}^{1}(x_{0}) = T_{1}$, $s_{3}^{1}(x_{2}) = B_{2}$
 			      \subitem $s_{4}^{1}(x_{0}) = B_{1}$
 			\item Player II strategies:
 			      \subitem $s_{1}^{2}(x_{1}) = t$
 			      \subitem $s_{2}^{2}(x_{1}) = b$
 		\end{itemize}
-
 
 		\vspace{0.5cm}
 		Game B\\
@@ -345,11 +347,12 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 			      \subitem $s_{1}^{1}(x_{0}) = T$
 			      \subitem $s_{2}^{1}(x_{0}) = B$
 			\item Player II strategies:
-			      \subitem $s_{1}^{2}(x_{1}) = t_{1}$
-			      \subitem $s_{2}^{2}(x_{1}) = m_{1}$
-			      \subitem $s_{3}^{2}(x_{1}) = b_{1}$
-			      \subitem $s_{4}^{2}(x_{2}) = t_{2}$
-			      \subitem $s_{5}^{2}(x_{2}) = b_{2}$
+			      \subitem $s_{1}^{2}(x_{1}) = t_{1}$, $s_{1}^{2}(x_{2}) = t_{2}$
+			      \subitem $s_{2}^{2}(x_{1}) = t_{1}$, $s_{2}^{2}(x_{2}) = b_{2}$
+			      \subitem $s_{3}^{2}(x_{1}) = m_{1}$, $s_{3}^{2}(x_{2}) = t_{2}$
+			      \subitem $s_{4}^{2}(x_{1}) = m_{1}$, $s_{4}^{2}(x_{2}) = b_{2}$
+			      \subitem $s_{5}^{2}(x_{1}) = b_{1}$, $s_{5}^{2}(x_{2}) = t_{2}$
+			      \subitem $s_{6}^{2}(x_{1}) = b_{1}$, $s_{6}^{2}(x_{2}) = b_{2}$
 		\end{itemize}
 
 		\vspace{0.5cm}
@@ -424,43 +427,39 @@ The following exercises are from \cite{maschler_solan_zamir_2020}.
 
 	\end{response}
 
-	b. Write out in full all the strategies of each player in each of the three games.
-
-	\begin{response}
-	\end{response}
-
-	c. How many different plays are possible in each of the games?
-
-	\begin{response}
-	\end{response}
 
 \end{exercise}
 
 \begin{exercise}{3.6}
-	In a single-player game in which at each vertex $x$ that is not the root the player has $m_x$ actions, how many strategies has the player got?
+	In a single-player game in which at each vertex $x$, that is not the root, the player has $m_x$ actions, how many strategies has the player got?
+
+	\begin{response}
+
+		% The total number of strategies that a player get, in a single-player game, in which each player's vertex $ x_{1} \in V_{1} $ contains $m_{x_{1}}$ actions, is $ \prod_{i=1}^{k} m_{x_{i}}$.\\
+		% To prove the above statement, first we consider the case where $ V_{1} = \{x_{0}\} $, which trivially implies that the player has $ m_{x_{0}} $ strategies.
+		% If $ V_{1} = \{x_{j}\}_{j=0}^{k} $, then by the inductive hypothesis, if $ V_{1} = \{x_{0}\} $, then we get
+	\end{response}
+\end{exercise}
+
+\begin{exercise}{3.7}
+	Prove von Neumann’s Theorem (Theorem 3.13 on page 46): in every two-player finite game with perfect information in which the set of outcomes is $O = \{\text{I wins}, \text{II wins}, \text{Draw}\}$, one and only one of the following three alternatives holds:
+	a. Player I has a winning strategy.
+	b. Player II has a winning strategy.
+	c. Each of the two players has a strategy guaranteeing at least a draw.
+	Where does your proof make use of the assumption that the game is finite?
 
 	\begin{response}
 	\end{response}
 \end{exercise}
 
-`3.7` Prove von Neumann’s Theorem (Theorem 3.13 on page 46): in every two-player finite game with perfect information in which the set of outcomes is $O = \{\text{I wins}, \text{II wins}, \text{Draw}\}$, one and only one of the following three alternatives holds:
+\begin{exercise}{3.8}
+	(Tic-Tac-Toe) How many strategies has Player I got in Tic-Tac-Toe, in which two players play on a $3\times 3$ board, as depicted in Figure 3.12? Player I makes the first move, and each player in turn chooses a square that has not previously been selected. Player I places an X in every square that he chooses, and Player II places an O in every square that he chooses. The game ends when every square has been selected. The first player who has managed to place his mark in three adjoining squares, where those three squares form either a column, a row, or a diagonal, is the winner.4 (Do not attempt to draw a full game tree. Despite the fact that the rules of the game are quite simple, the game tree is exceedingly large. Despite the size of the game tree, with a little experience players quickly learn how to ensure at least a draw in every play of the game.)
+	Figure 3.12: The board of the game Tic-Tac-Toe, after three moves
+	Footnote 4: The game, of course, can effectively be ended when one of the players has clearly ensured victory for himself, but calculating the number of strategies in that case is more complicated.
 
-a. Player I has a winning strategy.
-
-b. Player II has a winning strategy.
-
-c. Each of the two players has a strategy guaranteeing at least a draw.
-
-Where does your proof make use of the assumption that the game is finite?
-
-\vspace{0.5cm}
-\hrule
-\vspace{0.5cm}
-`3.8` (Tic-Tac-Toe) How many strategies has Player I got in Tic-Tac-Toe, in which two players play on a $3\times 3$ board, as depicted in Figure 3.12? Player I makes the first move, and each player in turn chooses a square that has not previously been selected. Player I places an X in every square that he chooses, and Player II places an O in every square that he chooses. The game ends when every square has been selected. The first player who has managed to place his mark in three adjoining squares, where those three squares form either a column, a row, or a diagonal, is the winner.4 (Do not attempt to draw a full game tree. Despite the fact that the rules of the game are quite simple, the game tree is exceedingly large. Despite the size of the game tree, with a little experience players quickly learn how to ensure at least a draw in every play of the game.)
-
-Figure 3.12: The board of the game Tic-Tac-Toe, after three moves
-
-Footnote 4: The game, of course, can effectively be ended when one of the players has clearly ensured victory for himself, but calculating the number of strategies in that case is more complicated.
+	\begin{response}
+	\end{response}
+\end{exercise}
 
 \vspace{0.5cm}
 \hrule
